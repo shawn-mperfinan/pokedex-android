@@ -4,6 +4,10 @@ agp = "8.12.1"
 kotlin = "2.2.10"
 devtoolsKsp = "2.2.10-2.0.2"
 
+# Static Code Analyzer
+ktLint = "13.1.0"
+detekt = "1.23.8"
+
 coreKtx = "1.17.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
@@ -35,3 +39,5 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "devtoolsKsp" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktLint" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

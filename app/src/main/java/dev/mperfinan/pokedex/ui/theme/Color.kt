@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package dev.mperfinan.pokedex.ui.theme
 
 import androidx.compose.ui.graphics.Color
