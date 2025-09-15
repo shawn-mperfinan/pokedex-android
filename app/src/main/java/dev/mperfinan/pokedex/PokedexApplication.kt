@@ -2,18 +2,23 @@ package dev.mperfinan.pokedex
 
 import android.app.Application
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import dev.mperfinan.pokedex.util.Constants.APP_FLAVOR
+import dev.mperfinan.pokedex.util.Constants.APP_VERSION_CODE
+import dev.mperfinan.pokedex.util.Constants.APP_VERSION_NAME
 
 class PokedexApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        val crashlytics = FirebaseCrashlytics.getInstance()
+        initializeFirebaseCrashlytics()
+    }
 
-        // Tag which flavor is running
-        crashlytics.setCustomKey("flavor", BuildConfig.FLAVOR)
-
-        // Optional: also tag version
-        crashlytics.setCustomKey("versionName", BuildConfig.VERSION_NAME)
-        crashlytics.setCustomKey("versionCode", BuildConfig.VERSION_CODE)
+    private fun initializeFirebaseCrashlytics() {
+        // Enable Firebase Crashlytics
+        FirebaseCrashlytics.getInstance().apply {
+            setCustomKey(APP_FLAVOR, BuildConfig.FLAVOR)
+            setCustomKey(APP_VERSION_NAME, BuildConfig.VERSION_NAME)
+            setCustomKey(APP_VERSION_CODE, BuildConfig.VERSION_CODE)
+        }
     }
 }
