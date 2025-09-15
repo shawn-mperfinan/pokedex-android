@@ -10,13 +10,6 @@ plugins {
     alias(libs.plugins.firebase.crashlytics)
 }
 
-// Configure flavor matching for google-services.json
-googleServices {
-    // This makes the plugin look in src/dev and src/live
-    // instead of expecting devDebug/devRelease folders
-    disableVersionCheck = true
-}
-
 // Load local.properties if it exists
 val localProperties =
     File(rootDir, "local.properties").let { file ->
