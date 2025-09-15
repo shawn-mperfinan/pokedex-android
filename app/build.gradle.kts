@@ -11,8 +11,19 @@ plugins {
 }
 
 // Initialize for property retrieval on variables defined in [local.properties]
-val localProperties = Properties()
-localProperties.load(project.rootProject.file("local.properties").inputStream())
+// val localProperties = Properties()
+// localProperties.load(project.rootProject.file("local.properties").inputStream())
+// Load local.properties if it exists
+val localProperties =
+    File(rootDir, "local.properties").let { file ->
+        Properties().apply {
+            if (file.exists()) {
+                file.inputStream().use { load(it) }
+            } else {
+                println("⚠️ No local.properties found, using defaults")
+            }
+        }
+    }
 
 // Calculates and get the versionCode based on commit counts
 fun getVersionCode(): Int {
@@ -56,10 +67,19 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file("../release/secret/android-keystore.jks")
-            keyAlias = localProperties.getProperty("ANDROID_KEY_ALIAS").orEmpty()
-            storePassword = localProperties.getProperty("ANDROID_KEYSTORE_PASSWORD").orEmpty()
-            keyPassword = localProperties.getProperty("ANDROID_KEY_PASSWORD").orEmpty()
+            val keyAlias = localProperties.getProperty("ANDROID_KEY_ALIAS")
+            val storePassword = localProperties.getProperty("ANDROID_KEYSTORE_PASSWORD")
+            val keyPassword = localProperties.getProperty("ANDROID_KEY_PASSWORD")
+            val storeFilePath = "../release/secret/android-keystore.jks"
+
+            if (keyAlias != null && storePassword != null && keyPassword != null) {
+                storeFile = file(storeFilePath)
+                this.keyAlias = keyAlias
+                this.storePassword = storePassword
+                this.keyPassword = keyPassword
+            } else {
+                println("⚠️ Skipping release signingConfig — no credentials found")
+            }
         }
     }
 
