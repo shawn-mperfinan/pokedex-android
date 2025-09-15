@@ -1,0 +1,46 @@
+name: Review and Analyze Pull Request
+
+on:
+  pull_request:
+    branches: [ review, develop, master ]
+
+jobs:
+  pull_request_review:
+    name: PR Review with Static Analysis and Test Coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version: '21'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 8.14.3
+
+      - name: Run All Unit Tests
+        id: test
+        run: ./gradlew test
+
+      - name: Run Android Linter
+        id: lint
+        run: ./gradlew lint --stacktrace
+
+      - name: Run Code Analyzers
+        id: analyzers
+        run: ./gradlew ktlintCheck detekt
+
+      - name: Slack Notification
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,commit,author,action,eventName,ref,workflow,pullRequest # selectable (default: repo,message)
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_DEVELOPMENT_WEBHOOK_URL }} # required
+        if: always() # Pick up events even if the job fails or is canceled.
