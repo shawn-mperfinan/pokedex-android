@@ -4,4 +4,12 @@ plugins {
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.compose) apply false
     alias(libs.plugins.devtools.ksp) apply false
+    alias(libs.plugins.ktlint) apply false
+    alias(libs.plugins.detekt) apply false
+}
+
+subprojects {
+    // Apply ktlint + detekt to every submodule
+    apply(from = "../static_analysis/ktlint.gradle")
+    apply(from = "../static_analysis/detekt.gradle")
 }
