@@ -10,9 +10,13 @@ plugins {
     alias(libs.plugins.firebase.crashlytics)
 }
 
-// Initialize for property retrieval on variables defined in [local.properties]
-// val localProperties = Properties()
-// localProperties.load(project.rootProject.file("local.properties").inputStream())
+// Configure flavor matching for google-services.json
+googleServices {
+    // This makes the plugin look in src/dev and src/live
+    // instead of expecting devDebug/devRelease folders
+    disableVersionCheck = true
+}
+
 // Load local.properties if it exists
 val localProperties =
     File(rootDir, "local.properties").let { file ->
