@@ -1,8 +1,10 @@
 [versions]
 # AGP and Tools
-agp = "8.12.1"
+agp = "8.13.0"
 kotlin = "2.2.10"
 devtoolsKsp = "2.2.10-2.0.2"
+googleServices = "4.4.3"
+firebaseBom = "34.2.0"
 
 # Static Code Analyzer
 ktLint = "13.1.0"
@@ -12,11 +14,14 @@ coreKtx = "1.17.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
-lifecycleRuntimeKtx = "2.9.2"
-activityCompose = "1.10.1"
-composeBom = "2025.08.00"
+lifecycleRuntimeKtx = "2.9.3"
+activityCompose = "1.11.0"
+composeBom = "2025.09.00"
+firebaseCrashlytics = "3.0.6"
 
 [libraries]
+
+# AndroidX
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
@@ -31,6 +36,10 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 
+# Firebase
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-crashlytics-ndk = { group = "com.google.firebase", name = "firebase-crashlytics-ndk" }
+
 # Testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 
@@ -41,3 +50,5 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "devtoolsKsp" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktLint" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlytics"}
