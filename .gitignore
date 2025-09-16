@@ -32,3 +32,10 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# Generated report in fastlane directory
+/fastlane/README.md
+/fastlane/report.xml
+
+# Ignore Gemfile.lock
+Gemfile.lock

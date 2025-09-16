@@ -1,0 +1,173 @@
+# This is the minimum version number required.
+# Update this, if you use features of a newer version
+fastlane_version "2.184.1"
+
+default_platform(:android)
+
+platform :android do
+
+  ####################################################
+  #           * Public Usable Lanes *                #
+  ####################################################
+
+  desc "Executes before any lanes in this Fastfile starts"
+  before_all { gradle(task: "clean") }
+
+  # Executes on pushes into dev branch
+  desc "Deploys DEV Environment of Pokedex App"
+  lane :deploy_dev do
+    UI.header "Executing: Pokedex App DEV Deployment..."
+
+    execute_deployment(flavor: "dev")
+
+    UI.success "Pokedex App DEV Deployed Successfully."
+  end
+
+  # Executes on pushes into master branch
+  desc "Deploys LIVE Environment of Pokedex App"
+  lane :deploy_live do
+    UI.header "Executing: Pokedex App LIVE Deployment..."
+
+    execute_deployment(flavor: "live")
+
+    UI.success "Pokedex App LIVE Deployed Successfully."
+  end
+
+  desc "Executes after any lanes in this Fastfile ends"
+  after_all do
+    cleanup_credential_files()
+  end
+
+  ####################################################
+
+  ####################################################
+  #           * Private Helper Lanes *               #
+  ####################################################
+
+  desc "Executes build deployment alongside apk/aab generation"
+  private_lane :execute_deployment do |options|
+      flavor = options[:flavor]
+
+      if flavor == "dev"
+         build_dev_apk()
+         distribute_dev_apk_to_firebase_app_distribution()
+
+         notify_slack_channel(
+           flavor: flavor,
+           release_artifact: "https://console.firebase.google.com/u/1/project/pokedex-app-develop/appdistribution/app/android:dev.mperfinan.pokedex.dev/releases",
+           release_notes: File.read(get_dev_release_notes_file())
+         )
+      else
+         build_live_app_bundle()
+
+         # TODO: this will be configured once google play account is created.
+         # upload_live_app_bundle_to_google_play()
+
+         # notify_slack_channel(
+         #  flavor: flavor,
+         #  release_artifact: "TBD",
+         #  release_notes: File.read(get_dev_release_notes_file())
+         # )
+      end
+  end
+
+  desc "Builds DEV app apk"
+  private_lane :build_dev_apk do
+    # Execute gradle task for apk generation
+    gradle(task: "assembleDevRelease")
+  end
+
+  desc "Builds LIVE app bundle"
+  private_lane :build_live_app_bundle do
+    # Execute gradle task for bundle generation
+    gradle(task: "bundleLiveRelease")
+  end
+
+  desc "Executes APK file uploading to Firebase App Distribution"
+  private_lane :distribute_dev_apk_to_firebase_app_distribution do
+      # assign value to `testers` or `groups` property when there is an available set of tester/s.
+      firebase_app_distribution(
+        app: ENV['POKEDEX_FIREBASE_APP_ID'],
+        service_credentials_file: get_distribution_service_credential_file(),
+        release_notes_file: get_dev_release_notes_file()
+      )
+  end
+
+  private_lane :notify_slack_channel do |options|
+      slack(
+        slack_url: ENV["SLACK_DEPLOYMENT_WEBHOOK_URL"],
+        message: "Pokédex App Android (#{options[:flavor].capitalize}) Successfully Released :tada: :tada: :tada:",
+        payload: {
+          "View Released Artifact" => options[:release_artifact],
+          "Release Notes" => options[:release_notes],
+        },
+        default_payloads: ["lane", "test_result", "git_branch", "git_author"],
+      )
+  end
+
+  desc "Retrieves dev release notes file"
+  private_lane :get_dev_release_notes_file do
+      next get_release_related_file(
+        file_name: "dev_release_notes.txt",
+        file_dir: "release"
+      )
+  end
+
+  desc "Retrieves firebase app distribution service credentials file"
+  private_lane :get_distribution_service_credential_file do
+      credential_file = get_release_related_file(
+         file_name: "firebase_app_distribution_service_credential.json",
+         file_dir: "release/secret"
+      )
+
+      if ENV["POKEDEX_FIREBASE_CREDENTIAL_CONTENT"].to_s.strip.empty?
+        UI.message("ℹ️ No ENV content found — assuming local usage, keeping existing file...")
+      else
+        File.open(credential_file, "w") do |file|
+        file.write(ENV["POKEDEX_FIREBASE_CREDENTIAL_CONTENT"])
+        end
+
+        UI.message("✅ Overwrote Firebase credential file for CI usage")
+      end
+
+      next credential_file
+  end
+
+  desc "Retrieves release related file"
+  private_lane :get_release_related_file do |options|
+      file_name = options[:file_name]
+      file_dir = options[:file_dir]
+
+      project_root_dir = File.expand_path("..", File.dirname(__FILE__))
+      release_file_dir = File.join(project_root_dir, file_dir)
+      retrieved_file = File.join(release_file_dir, file_name)
+      # Return the retrieved file from the calculated path
+      next retrieved_file
+  end
+
+  desc "Cleans up sensitive release credential files after deployment"
+  private_lane :cleanup_credential_files do
+    files = [
+      get_release_related_file(
+        file_name: "firebase_app_distribution_service_credential.json",
+        file_dir: "release/secret"
+      ),
+      get_release_related_file(
+        file_name: "google_play_service_account.json",
+        file_dir: "release/secret"
+      )
+    ]
+
+    files.each do |file|
+      if File.exist?(file)
+        File.open(file, "w") { |f| f.write("") }
+        UI.message("🧹 Cleared content of #{file}")
+      else
+        UI.message("ℹ️ Skipped cleanup — #{file} does not exist")
+      end
+    end
+  end
+
+  ####################################################
+
+end
