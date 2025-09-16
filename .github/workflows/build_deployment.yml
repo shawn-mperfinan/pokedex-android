@@ -26,17 +26,10 @@ jobs:
           ruby-version: '3.3'
           bundler-cache: true
 
-      - name: Set up Encrypted Keystore File
+      - name: Set up Encoded Keystore File
         run: |
-          mkdir -p release
-          echo "${{ secrets.ENCRYPTED_KEYSTORE_CONTENT }}" > release/encrypted_keystore.enc
-          
-      - name: Decrypt Keystore
-        run: |
-          base64 -d -i release/encrypted_keystore.enc | \
-          openssl enc -d -aes-256-cbc -pbkdf2 \
-          -pass pass:"${{ secrets.ENCRYPTED_KEYSTORE_PASSPHRASE }}" \
-          -out $GITHUB_WORKSPACE/release/secret/android-keystore.jks
+          mkdir -p $GITHUB_WORKSPACE/release/secret
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > $GITHUB_WORKSPACE/release/secret/android-keystore.jks
 
       - name: Set up local.properties
         run: |
