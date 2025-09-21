@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Pokedexandroid" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.PokedexAndroid" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- Disable system splashscreen icon -->
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
 </resources>
