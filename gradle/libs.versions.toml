@@ -1,23 +1,29 @@
 [versions]
 # AGP and Tools
 agp = "8.13.0"
-kotlin = "2.2.10"
-devtoolsKsp = "2.2.10-2.0.2"
-googleServices = "4.4.3"
-firebaseBom = "34.2.0"
+kotlin = "2.2.20"
+devtoolsKsp = "2.2.20-2.0.4"
+googleServices = "4.4.4"
+firebaseBom = "34.4.0"
 
 # Static Code Analyzer
 ktLint = "13.1.0"
 detekt = "1.23.8"
 
+# AndroidX
 coreKtx = "1.17.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
-lifecycleRuntimeKtx = "2.9.3"
+lifecycleRuntimeKtx = "2.9.4"
 activityCompose = "1.11.0"
-composeBom = "2025.09.00"
+composeBom = "2025.10.01"
 firebaseCrashlytics = "3.0.6"
+hiltNavigationCompose = "1.3.0"
+datastorePreferences = "1.1.7"
+
+# Google
+hiltAndroid = "2.57.2"
 
 [libraries]
 
@@ -35,6 +41,12 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastorePreferences" }
+
+# Google
+google-dagger-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltAndroid" }
+google-dagger-hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hiltAndroid" }
 
 # Firebase
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
@@ -52,3 +64,4 @@ ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktLint" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlytics"}
+android-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }

@@ -19,5 +19,12 @@ ktlint {
     filter {
         exclude("**/generated/**")
         include("**/kotlin/**")
+
+        /**
+         * Exclude the file with the experimental context parameter temporarily.
+         * Watch-out for latest release based on below raised issue:
+         * (https://github.com/JLLeitschuh/ktlint-gradle/issues/912)
+         */
+        exclude("**/manager/ContextParameter.kt")
     }
 }
