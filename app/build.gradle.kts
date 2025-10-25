@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.devtools.ksp)
+    alias(libs.plugins.android.hilt)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.google.services)
 }
@@ -54,6 +55,12 @@ android {
     java {
         toolchain {
             languageVersion = JavaLanguageVersion.of(JavaVersion.VERSION_21.toString())
+        }
+    }
+
+    kotlin {
+        compilerOptions {
+            freeCompilerArgs.add("-Xcontext-parameters")
         }
     }
 
@@ -123,6 +130,7 @@ android {
 }
 
 dependencies {
+    // AndroidX
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -132,8 +140,17 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
+    // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.crashlytics.ndk)
+
+    // Hilt
+    implementation(libs.google.dagger.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+    ksp(libs.google.dagger.hilt.android.compiler)
+
+    // Preferences Datastore
+    implementation(libs.androidx.datastore.preferences)
 
     testImplementation(libs.junit)
 

@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Pokédex</string>
+
+    <!--Onboarding Screen Labels and Descriptions-->
+    <string name="pokemon_news_onboarding_label">Stay Updated on Pokémon News</string>
+    <string name="pokemon_news_onboarding_description">Catch up on the latest Pokémon events, updates, and discoveries.</string>
+
+    <string name="pokedex_onboarding_label">Explore the Pokédex</string>
+    <string name="pokedex_onboarding_description">Browse through hundreds of Pokémon species and learn about their traits.</string>
+
+    <string name="favorites_onboarding_label">Save Your Favorites</string>
+    <string name="favorites_onboarding_description">Keep your top Pokémon and favorite articles all in one place.</string>
+
+    <!--Onboarding Button Label-->
+    <string name="start_exploring_button_label">Start Exploring</string>
+
+    <!--Generic Button Labels-->
+    <string name="back_button_label">Back</string>
+    <string name="next_button_label">Next</string>
+
 </resources>

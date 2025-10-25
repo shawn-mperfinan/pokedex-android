@@ -2,10 +2,12 @@ package dev.mperfinan.pokedex
 
 import android.app.Application
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import dev.mperfinan.pokedex.util.Constants.APP_FLAVOR
-import dev.mperfinan.pokedex.util.Constants.APP_VERSION_CODE
-import dev.mperfinan.pokedex.util.Constants.APP_VERSION_NAME
+import dagger.hilt.android.HiltAndroidApp
+import dev.mperfinan.pokedex.utility.Constants.APP_FLAVOR
+import dev.mperfinan.pokedex.utility.Constants.APP_VERSION_CODE
+import dev.mperfinan.pokedex.utility.Constants.APP_VERSION_NAME
 
+@HiltAndroidApp
 class PokedexApplication : Application() {
     override fun onCreate() {
         super.onCreate()
