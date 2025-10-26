@@ -7,8 +7,9 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.devtools.ksp)
     alias(libs.plugins.android.hilt)
-    alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
+    alias(libs.plugins.roboelectric.extension)
 }
 
 // Load local.properties if it exists
@@ -127,6 +128,10 @@ android {
             )
         }
     }
+
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
+    }
 }
 
 dependencies {
@@ -139,6 +144,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.core.ktx)
 
     // Firebase
     implementation(platform(libs.firebase.bom))
@@ -152,7 +158,22 @@ dependencies {
     // Preferences Datastore
     implementation(libs.androidx.datastore.preferences)
 
-    testImplementation(libs.junit)
+    // JUnit 4
+    testImplementation(libs.junit4)
+
+    // JUnit 5
+    testImplementation(libs.junit5.api)
+    testRuntimeOnly(libs.junit5.engine)
+
+    // Robolectric
+    testImplementation(libs.robolectric)
+
+    // Coroutines
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    // Truth & Turbine
+    testImplementation(libs.cash.app.turbine)
+    testImplementation(libs.google.truth)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
