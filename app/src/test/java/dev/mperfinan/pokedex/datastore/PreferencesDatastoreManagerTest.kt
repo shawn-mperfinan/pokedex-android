@@ -4,12 +4,11 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import dev.mperfinan.pokedex.data.source.datastore.IUserPreferencesDatastore
-import dev.mperfinan.pokedex.data.source.datastore.UserPreferencesDatastore
 import dev.mperfinan.pokedex.utility.manager.PreferencesDatastoreManager
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestScope
@@ -24,21 +23,21 @@ import java.io.File
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @ExtendWith(RobolectricExtension::class)
-class UserPreferencesDatastoreTest {
+class PreferencesDatastoreManagerTest {
     private val testScope = TestScope(UnconfinedTestDispatcher())
+    private val testKey = booleanPreferencesKey("test_key")
+
     private lateinit var context: Context
     private lateinit var testFile: File
     private lateinit var dataStore: DataStore<Preferences>
     private lateinit var datastoreManager: PreferencesDatastoreManager
-    private lateinit var userPreferencesDatastore: IUserPreferencesDatastore
 
     @BeforeEach
     fun setup() {
         context = ApplicationProvider.getApplicationContext()
-        testFile = context.preferencesDataStoreFile("user_prefs_test.preferences_pb")
+        testFile = context.preferencesDataStoreFile("prefs_test.preferences_pb")
         dataStore = PreferenceDataStoreFactory.create(produceFile = { testFile })
         datastoreManager = PreferencesDatastoreManager(dataStore)
-        userPreferencesDatastore = UserPreferencesDatastore(datastoreManager)
     }
 
     @AfterEach
@@ -47,23 +46,39 @@ class UserPreferencesDatastoreTest {
     }
 
     @Test
-    fun `getIsAppFirstLaunch should retrieve (true) as IS_APP_FIRST_LAUNCH's initial value when performed`() {
+    fun `retrieve should return prefs default value on its initial state`() {
         testScope.runTest {
-            userPreferencesDatastore.getIsAppFirstLaunch().test {
-                val isAppFirstLaunch = awaitItem()
-                assertThat(isAppFirstLaunch).isTrue()
+            datastoreManager.retrieve(testKey, true).test {
+                val value = awaitItem()
+                assertThat(value).isTrue()
                 cancelAndConsumeRemainingEvents()
             }
         }
     }
 
     @Test
-    fun `getIsAppFirstLaunch should retrieve IS_APP_FIRST_LAUNCH's new value when setIsAppFirstLaunch is performed`() {
+    fun `retrieve should return newly assigned prefs value`() {
         testScope.runTest {
-            userPreferencesDatastore.setIsAppFirstLaunch(false)
-            userPreferencesDatastore.getIsAppFirstLaunch().test {
-                val isAppFirstLaunch = awaitItem()
-                assertThat(isAppFirstLaunch).isFalse()
+            datastoreManager.store(testKey, false)
+
+            datastoreManager.retrieve(testKey, true).test {
+                val value = awaitItem()
+                assertThat(value).isFalse()
+                cancelAndConsumeRemainingEvents()
+            }
+        }
+    }
+
+    @Test
+    fun `retrieve should return default value once assigned prefs value is cleared`() {
+        testScope.runTest {
+            datastoreManager.store(testKey, false)
+
+            datastoreManager.clear(testKey)
+
+            datastoreManager.retrieve(testKey, true).test {
+                val value = awaitItem()
+                assertThat(value).isTrue()
                 cancelAndConsumeRemainingEvents()
             }
         }

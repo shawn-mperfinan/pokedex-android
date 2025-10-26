@@ -1,6 +1,7 @@
 package dev.mperfinan.pokedex
 
 import android.app.Application
+import com.google.firebase.FirebaseApp
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.HiltAndroidApp
 import dev.mperfinan.pokedex.utility.Constants.APP_FLAVOR
@@ -12,10 +13,13 @@ class PokedexApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        initializeFirebaseCrashlytics()
+        initializeFirebaseAppAndCrashlytics()
     }
 
-    private fun initializeFirebaseCrashlytics() {
+    private fun initializeFirebaseAppAndCrashlytics() {
+        // Initialize Firebase App
+        FirebaseApp.initializeApp(this)
+
         // Enable Firebase Crashlytics
         FirebaseCrashlytics.getInstance().apply {
             setCustomKey(APP_FLAVOR, BuildConfig.FLAVOR)

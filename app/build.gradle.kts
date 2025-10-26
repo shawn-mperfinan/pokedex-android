@@ -7,8 +7,9 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.devtools.ksp)
     alias(libs.plugins.android.hilt)
-    alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
+    alias(libs.plugins.roboelectric.extension)
 }
 
 // Load local.properties if it exists
@@ -127,6 +128,10 @@ android {
             )
         }
     }
+
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
+    }
 }
 
 dependencies {
@@ -160,13 +165,14 @@ dependencies {
     testImplementation(libs.junit5.api)
     testRuntimeOnly(libs.junit5.engine)
 
+    // Robolectric
+    testImplementation(libs.robolectric)
+
     // Coroutines
     testImplementation(libs.kotlinx.coroutines.test)
 
-    // Turbine
+    // Truth & Turbine
     testImplementation(libs.cash.app.turbine)
-
-    // Test Assertion
     testImplementation(libs.google.truth)
 
     androidTestImplementation(libs.androidx.junit)

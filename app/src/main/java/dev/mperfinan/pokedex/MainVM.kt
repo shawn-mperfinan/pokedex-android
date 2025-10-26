@@ -1,5 +1,3 @@
-@file:Suppress("MagicNumber")
-
 package dev.mperfinan.pokedex
 
 import androidx.lifecycle.ViewModel
