@@ -53,6 +53,11 @@ import dev.mperfinan.pokedex.ui.theme.PurpleGrey80
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
+const val ONBOARDING_PAGER_TEST_TAG = "OnboardingPager"
+const val BACK_BUTTON_TEST_TAG = "BackNavigationButton"
+const val NEXT_BUTTON_TEST_TAG = "NextNavigationButton"
+const val START_EXPLORING_BUTTON_TEST_TAG = "StartExploringNavigationButton"
+
 @Composable
 fun OnboardingScreen(onStartExploring: (Boolean) -> Unit) {
     val onboardingScreenCounts = onboardingScreenEntries.size
@@ -76,8 +81,8 @@ fun OnboardingScreen(onStartExploring: (Boolean) -> Unit) {
             userScrollEnabled = !isLastOnboardingScreen,
             modifier =
                 Modifier
-                    .wrapContentSize(),
-//                    .testTag() // uncomment this for UI testing
+                    .wrapContentSize()
+                    .testTag(ONBOARDING_PAGER_TEST_TAG),
         ) { pagerPage ->
             val pagerOffset = (currentPagerPage - pagerPage) + pagerState.currentPageOffsetFraction
 
@@ -220,8 +225,8 @@ private fun StartExploringButton(onClickStartExploring: (Boolean) -> Unit) {
             Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp, vertical = 10.dp)
-                .clip(RoundedCornerShape(20.dp)),
-//                .testTag(START_READING_BUTTON_TEST_TAG),
+                .clip(RoundedCornerShape(20.dp))
+                .testTag(START_EXPLORING_BUTTON_TEST_TAG),
     ) {
         Text(
             modifier = Modifier.align(Alignment.CenterVertically),
@@ -248,16 +253,14 @@ private fun OnboardingNavigationButtons(
         if (shouldShowBackButton) {
             NavigationButton(
                 buttonLabel = stringResource(id = R.string.back_button_label),
-//                testTag = BACK_BUTTON_TEST_TAG,
-                testTag = "",
+                testTag = BACK_BUTTON_TEST_TAG,
                 onClick = onBackClick,
             )
         }
 
         NavigationButton(
             buttonLabel = stringResource(id = R.string.next_button_label),
-//            testTag = NEXT_BUTTON_TEST_TAG,
-            testTag = "",
+            testTag = NEXT_BUTTON_TEST_TAG,
             fillColor = Purple40,
             onClick = onNextClick,
         )
