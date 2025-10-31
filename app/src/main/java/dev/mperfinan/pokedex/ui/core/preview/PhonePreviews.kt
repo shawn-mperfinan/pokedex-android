@@ -1,4 +1,4 @@
-package dev.mperfinan.pokedex.ui.core
+package dev.mperfinan.pokedex.ui.core.preview
 
 import android.content.res.Configuration
 import androidx.compose.ui.tooling.preview.Preview

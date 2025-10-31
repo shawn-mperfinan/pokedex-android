@@ -1,10 +1,10 @@
 [versions]
 # AGP and Tools
 agp = "8.13.0"
-kotlin = "2.2.20"
+kotlin = "2.2.21"
 devtoolsKsp = "2.2.20-2.0.4"
 googleServices = "4.4.4"
-firebaseBom = "34.4.0"
+firebaseBom = "34.5.0"
 
 # Static Code Analyzer
 ktLint = "13.1.0"
@@ -35,13 +35,14 @@ robolectric-ext = "0.9.0"
 hiltAndroid = "2.57.2"
 truth = "1.4.5"
 
-
 [libraries]
 
 # AndroidX
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
+androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
@@ -71,7 +72,7 @@ junit5-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.
 junit5-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junitJupiter" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 cash-app-turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
-robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric"}
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -81,7 +82,7 @@ devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "devtoolsKsp" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktLint" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlytics"}
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlytics" }
 android-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
 android-junit5 = { id = "de.mannodermaus.android-junit5", version.ref = "androidJUnit5" }
 roboelectric-extension = { id = "tech.apter.junit5.jupiter.robolectric-extension-gradle-plugin", version.ref = "robolectric-ext" }

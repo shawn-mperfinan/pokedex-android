@@ -44,7 +44,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.mperfinan.pokedex.R
-import dev.mperfinan.pokedex.ui.core.PhonePreviews
+import dev.mperfinan.pokedex.ui.core.preview.PhonePreviews
 import dev.mperfinan.pokedex.ui.theme.Pink40
 import dev.mperfinan.pokedex.ui.theme.PokedexTheme
 import dev.mperfinan.pokedex.ui.theme.Purple40
