@@ -18,4 +18,16 @@
     <string name="back_button_label">Back</string>
     <string name="next_button_label">Next</string>
 
+    <!--Dashboard Labels-->
+    <string name="dashboard_header_label">What Pokémon are you looking for?</string>
+    <string name="search_placeholder_label">Search a pokémon</string>
+    <string name="pokedex_button_label">Pokédex</string>
+    <string name="items_button_label">Items</string>
+    <string name="moves_button_label">Moves</string>
+    <string name="types_button_label">Types</string>
+    <string name="favorites_button_label">Favorites</string>
+    <string name="pokemon_news_section_label">Pokémon News</string>
+    <string name="view_all_news_button_label">View All</string>
+
+
 </resources>

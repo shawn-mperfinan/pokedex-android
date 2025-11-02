@@ -26,6 +26,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -34,6 +35,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -45,9 +47,11 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -105,7 +109,7 @@ fun DashboardScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Pokédex",
+                        text = stringResource(R.string.app_name),
                         style = MaterialTheme.typography.titleMedium.copy(
                             fontWeight = FontWeight.SemiBold,
                             fontFamily = FontFamily(Font(R.font.poppins_medium)),
@@ -140,7 +144,7 @@ fun DashboardScreen(
             ) {
                 Text(
                     modifier = Modifier.padding(horizontal = DefaultHorizontalPadding, vertical = 20.dp),
-                    text = "What Pokémon are you looking for?",
+                    text = stringResource(R.string.dashboard_header_label),
                     style = MaterialTheme.typography.headlineSmall.copy(
                         fontWeight = FontWeight.SemiBold,
                         color = MaterialTheme.colorScheme.inverseSurface,
@@ -155,14 +159,13 @@ fun DashboardScreen(
                         Modifier
                             .fillMaxWidth()
                             .padding(horizontal = DefaultHorizontalPadding),
-                    // TODO: place this in a proper xml string property
-                    placeHolder = "Search a pokémon",
+                    placeHolder = stringResource(R.string.search_placeholder_label),
                 )
 
                 VerticalSpace(20.dp)
 
                 DashboardButton(
-                    label = "Pokédex",
+                    label = stringResource(R.string.pokedex_button_label),
                     gradientBackgroundColor = Brush.linearGradient(
                         colors = listOf(Color(0xFF368E43), Color(0xFF5ABEA5))
                     ),
@@ -181,7 +184,7 @@ fun DashboardScreen(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     DashboardButton(
-                        label = "Items",
+                        label = stringResource(R.string.items_button_label),
                         gradientBackgroundColor = Brush.linearGradient(
                             colors = listOf(Color(0xFFA80003), Color(0xFFF26CA1))
                         ),
@@ -190,7 +193,7 @@ fun DashboardScreen(
                         horizontalPadding = 0.dp,
                     )
                     DashboardButton(
-                        label = "Moves",
+                        label = stringResource(R.string.moves_button_label),
                         gradientBackgroundColor = Brush.linearGradient(
                             colors = listOf(Color(0xFF2A55A4), Color(0xFF59A9FC))
                         ),
@@ -209,7 +212,7 @@ fun DashboardScreen(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     DashboardButton(
-                        label = "Types",
+                        label = stringResource(R.string.types_button_label),
                         gradientBackgroundColor = Brush.linearGradient(
                             colors = listOf(Color(0xFFEBA04B), Color(0xFFF6CC51))
                         ),
@@ -218,7 +221,7 @@ fun DashboardScreen(
                         horizontalPadding = 0.dp,
                     )
                     DashboardButton(
-                        label = "Favorites",
+                        label = stringResource(R.string.favorites_button_label),
                         gradientBackgroundColor = Brush.linearGradient(
                             colors = listOf(Color(0xFF422F2F), Color(0xFFFFA98F))
                         ),
@@ -228,14 +231,39 @@ fun DashboardScreen(
                     )
                 }
 
-                Text(
-                    modifier = Modifier.padding(horizontal = DefaultHorizontalPadding, vertical = 26.dp),
-                    text = "Pokemon News",
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        fontWeight = FontWeight.SemiBold,
-                        fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                    ),
-                )
+                Row(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = DefaultHorizontalPadding, vertical = 26.dp),
+                    horizontalArrangement = Arrangement.Absolute.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = stringResource(R.string.pokemon_news_section_label),
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            fontWeight = FontWeight.SemiBold,
+                            fontFamily = FontFamily(Font(R.font.poppins_medium)),
+                        ),
+                    )
+
+                    TextButton(
+                        onClick = {},
+                        colors = ButtonDefaults.textButtonColors(
+                            contentColor = MaterialTheme.colorScheme.tertiary
+                        ),
+                        contentPadding = PaddingValues(0.dp)
+                    ) {
+                        Text(
+                            text = stringResource(R.string.view_all_news_button_label),
+                            style = MaterialTheme.typography.titleSmall.copy(
+                                fontWeight = FontWeight.SemiBold,
+                                fontFamily = FontFamily(Font(R.font.poppins_medium)),
+                            ),
+                            textDecoration = TextDecoration.Underline
+                        )
+                    }
+                }
 
                 val listState = rememberLazyListState()
                 val flingBehavior = rememberSnapFlingBehavior(listState)
