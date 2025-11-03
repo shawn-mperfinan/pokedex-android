@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,21 +23,17 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -57,7 +52,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mperfinan.pokedex.R
-import dev.mperfinan.pokedex.ui.core.composable.PokemonContainer
 import dev.mperfinan.pokedex.ui.core.composable.SearchField
 import dev.mperfinan.pokedex.ui.core.composable.VerticalSpace
 import dev.mperfinan.pokedex.ui.core.preview.PhonePreviews
@@ -103,179 +97,147 @@ private val DefaultHorizontalPadding = 18.dp
 fun DashboardScreen(
     modifier: Modifier = Modifier,
 ) {
-    Scaffold(
-        containerColor = MaterialTheme.colorScheme.background,
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(R.string.app_name),
-                        style = MaterialTheme.typography.titleMedium.copy(
-                            fontWeight = FontWeight.SemiBold,
-                            fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                        ),
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = {}) {
-                        Icon(
-                            imageVector = Icons.Default.Menu,
-                            contentDescription = "Menu"
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
+    val scrollingState = rememberScrollState()
+    val drawerScope = rememberCoroutineScope()
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val listState = rememberLazyListState()
+    val flingBehavior = rememberSnapFlingBehavior(listState)
+
+    PokedexScaffoldWithDrawer(
+        drawerScope = drawerScope,
+        drawerState = drawerState,
+    ) {
+        Column(modifier = Modifier.verticalScroll(scrollingState)) {
+            Text(
+                modifier = Modifier.padding(horizontal = DefaultHorizontalPadding, vertical = 20.dp),
+                text = stringResource(R.string.dashboard_header_label),
+                style = MaterialTheme.typography.headlineSmall.copy(
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.inverseSurface,
+                    fontFamily = FontFamily(Font(R.font.poppins_medium)),
+                )
             )
-        }
-    ) { screenPadding ->
-        PokemonContainer(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(screenPadding)
-        ) {
 
-
-            Column(
+            SearchField(
+                searchInput = "",
+                onValueChange = {},
                 modifier =
                     Modifier
-                        .fillMaxSize()
-                        .verticalScroll(rememberScrollState())
+                        .fillMaxWidth()
+                        .padding(horizontal = DefaultHorizontalPadding),
+                placeHolder = stringResource(R.string.search_placeholder_label),
+            )
+
+            VerticalSpace(20.dp)
+
+            DashboardButton(
+                label = stringResource(R.string.pokedex_button_label),
+                gradientBackgroundColor = Brush.linearGradient(
+                    colors = listOf(Color(0xFF368E43), Color(0xFF5ABEA5))
+                ),
+                onClick = { },
+                modifier = Modifier.fillMaxWidth(),
+                imageWidthFraction = 0.6f,
+                imageAspectRatio = 1.8f,
+            )
+
+            VerticalSpace(8.dp)
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = DefaultHorizontalPadding),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Text(
-                    modifier = Modifier.padding(horizontal = DefaultHorizontalPadding, vertical = 20.dp),
-                    text = stringResource(R.string.dashboard_header_label),
-                    style = MaterialTheme.typography.headlineSmall.copy(
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.inverseSurface,
-                        fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                    )
-                )
-
-                SearchField(
-                    searchInput = "",
-                    onValueChange = {},
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = DefaultHorizontalPadding),
-                    placeHolder = stringResource(R.string.search_placeholder_label),
-                )
-
-                VerticalSpace(20.dp)
-
                 DashboardButton(
-                    label = stringResource(R.string.pokedex_button_label),
+                    label = stringResource(R.string.items_button_label),
                     gradientBackgroundColor = Brush.linearGradient(
-                        colors = listOf(Color(0xFF368E43), Color(0xFF5ABEA5))
+                        colors = listOf(Color(0xFFA80003), Color(0xFFF26CA1))
                     ),
                     onClick = { },
-                    modifier = Modifier.fillMaxWidth(),
-                    imageWidthFraction = 0.6f,
-                    imageAspectRatio = 1.8f,
+                    modifier = Modifier.weight(1f),
+                    horizontalPadding = 0.dp,
+                )
+                DashboardButton(
+                    label = stringResource(R.string.moves_button_label),
+                    gradientBackgroundColor = Brush.linearGradient(
+                        colors = listOf(Color(0xFF2A55A4), Color(0xFF59A9FC))
+                    ),
+                    onClick = { },
+                    modifier = Modifier.weight(1f),
+                    horizontalPadding = 0.dp,
+                )
+            }
+
+            VerticalSpace(8.dp)
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = DefaultHorizontalPadding),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                DashboardButton(
+                    label = stringResource(R.string.types_button_label),
+                    gradientBackgroundColor = Brush.linearGradient(
+                        colors = listOf(Color(0xFFEBA04B), Color(0xFFF6CC51))
+                    ),
+                    onClick = { },
+                    modifier = Modifier.weight(1f),
+                    horizontalPadding = 0.dp,
+                )
+                DashboardButton(
+                    label = stringResource(R.string.favorites_button_label),
+                    gradientBackgroundColor = Brush.linearGradient(
+                        colors = listOf(Color(0xFF422F2F), Color(0xFFFFA98F))
+                    ),
+                    onClick = { },
+                    modifier = Modifier.weight(1f),
+                    horizontalPadding = 0.dp,
+                )
+            }
+
+            Row(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = DefaultHorizontalPadding, vertical = 26.dp),
+                horizontalArrangement = Arrangement.Absolute.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(R.string.pokemon_news_section_label),
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.SemiBold,
+                        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+                    ),
                 )
 
-                VerticalSpace(8.dp)
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = DefaultHorizontalPadding),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    DashboardButton(
-                        label = stringResource(R.string.items_button_label),
-                        gradientBackgroundColor = Brush.linearGradient(
-                            colors = listOf(Color(0xFFA80003), Color(0xFFF26CA1))
-                        ),
-                        onClick = { },
-                        modifier = Modifier.weight(1f),
-                        horizontalPadding = 0.dp,
-                    )
-                    DashboardButton(
-                        label = stringResource(R.string.moves_button_label),
-                        gradientBackgroundColor = Brush.linearGradient(
-                            colors = listOf(Color(0xFF2A55A4), Color(0xFF59A9FC))
-                        ),
-                        onClick = { },
-                        modifier = Modifier.weight(1f),
-                        horizontalPadding = 0.dp,
-                    )
-                }
-
-                VerticalSpace(8.dp)
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = DefaultHorizontalPadding),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    DashboardButton(
-                        label = stringResource(R.string.types_button_label),
-                        gradientBackgroundColor = Brush.linearGradient(
-                            colors = listOf(Color(0xFFEBA04B), Color(0xFFF6CC51))
-                        ),
-                        onClick = { },
-                        modifier = Modifier.weight(1f),
-                        horizontalPadding = 0.dp,
-                    )
-                    DashboardButton(
-                        label = stringResource(R.string.favorites_button_label),
-                        gradientBackgroundColor = Brush.linearGradient(
-                            colors = listOf(Color(0xFF422F2F), Color(0xFFFFA98F))
-                        ),
-                        onClick = { },
-                        modifier = Modifier.weight(1f),
-                        horizontalPadding = 0.dp,
-                    )
-                }
-
-                Row(
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = DefaultHorizontalPadding, vertical = 26.dp),
-                    horizontalArrangement = Arrangement.Absolute.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                TextButton(
+                    onClick = {},
+                    colors = ButtonDefaults.textButtonColors(
+                        contentColor = MaterialTheme.colorScheme.tertiary
+                    ),
+                    contentPadding = PaddingValues(0.dp)
                 ) {
                     Text(
-                        text = stringResource(R.string.pokemon_news_section_label),
-                        style = MaterialTheme.typography.titleMedium.copy(
+                        text = stringResource(R.string.view_all_news_button_label),
+                        style = MaterialTheme.typography.titleSmall.copy(
                             fontWeight = FontWeight.SemiBold,
                             fontFamily = FontFamily(Font(R.font.poppins_medium)),
                         ),
+                        textDecoration = TextDecoration.Underline
                     )
-
-                    TextButton(
-                        onClick = {},
-                        colors = ButtonDefaults.textButtonColors(
-                            contentColor = MaterialTheme.colorScheme.tertiary
-                        ),
-                        contentPadding = PaddingValues(0.dp)
-                    ) {
-                        Text(
-                            text = stringResource(R.string.view_all_news_button_label),
-                            style = MaterialTheme.typography.titleSmall.copy(
-                                fontWeight = FontWeight.SemiBold,
-                                fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                            ),
-                            textDecoration = TextDecoration.Underline
-                        )
-                    }
                 }
-
-                val listState = rememberLazyListState()
-                val flingBehavior = rememberSnapFlingBehavior(listState)
-
-                PokemonNews(
-                    listState = listState,
-                    flingBehavior = flingBehavior,
-                    news = news
-                )
-
-                VerticalSpace(20.dp)
             }
+
+            PokemonNews(
+                listState = listState,
+                flingBehavior = flingBehavior,
+                news = news
+            )
+
+            VerticalSpace(20.dp)
         }
     }
 }
@@ -301,7 +263,7 @@ private fun PokemonNews(
 }
 
 @Composable
-fun NewsCard(
+private fun NewsCard(
     news: PokemonNews,
     onCardClick: () -> Unit,
 ) {
