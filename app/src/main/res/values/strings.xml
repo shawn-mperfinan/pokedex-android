@@ -29,5 +29,11 @@
     <string name="pokemon_news_section_label">Pokémon News</string>
     <string name="view_all_news_button_label">View All</string>
 
+    <!--Drawer Labels-->
+    <string name="drawer_item_settings_label">Settings</string>
+    <string name="drawer_item_about_label">About</string>
+    <string name="drawer_item_feedback_label">Feedback</string>
+    <string name="drawer_footer_label">VERSION: %1$s</string>
+
 
 </resources>
