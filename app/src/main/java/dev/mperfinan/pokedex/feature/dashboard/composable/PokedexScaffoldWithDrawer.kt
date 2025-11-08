@@ -1,14 +1,10 @@
-package dev.mperfinan.pokedex.feature.dashboard
+package dev.mperfinan.pokedex.feature.dashboard.composable
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
@@ -17,7 +13,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -25,30 +20,31 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import dev.mperfinan.pokedex.R
-import dev.mperfinan.pokedex.feature.drawer.PokedexDrawer
+import dev.mperfinan.pokedex.ui.core.composable.BackArrowIconButton
+import dev.mperfinan.pokedex.ui.core.composable.MenuDrawerIconButton
 import dev.mperfinan.pokedex.ui.core.composable.PokemonContainer
 import dev.mperfinan.pokedex.ui.core.preview.PhonePreviews
 import dev.mperfinan.pokedex.ui.theme.PokedexTheme
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import dev.mperfinan.pokedex.utility.UiContent
+import dev.mperfinan.pokedex.utility.ValueChanged
+import dev.mperfinan.pokedex.utility.VoidCallback
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PokedexScaffoldWithDrawer(
-    drawerScope: CoroutineScope,
     drawerState: DrawerState,
-    content: @Composable () -> Unit,
+    appBarTitle: Int,
+    isDashboardDestinationActive: Boolean,
+    onMenuDrawerClicked: VoidCallback,
+    onMenuItemClicked: ValueChanged<String>,
+    onBackClicked: VoidCallback,
+    content: UiContent,
 ) {
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            PokedexDrawer(
-                onMenuItemClicked = { item ->
-                    drawerScope.launch { drawerState.close() }
-                    // TODO: add navigation to designated drawer item's path
-                }
-            )
-        }
+            PokedexDrawer(onMenuItemClicked = onMenuItemClicked)
+        },
     ) {
         Scaffold(
             containerColor = MaterialTheme.colorScheme.background,
@@ -56,32 +52,30 @@ fun PokedexScaffoldWithDrawer(
                 TopAppBar(
                     title = {
                         Text(
-                            text = stringResource(R.string.app_name),
-                            style = MaterialTheme.typography.titleMedium.copy(
-                                fontWeight = FontWeight.SemiBold,
-                                fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                            ),
+                            text = stringResource(appBarTitle),
+                            style =
+                                MaterialTheme.typography.titleMedium.copy(
+                                    fontWeight = FontWeight.SemiBold,
+                                    fontFamily = FontFamily(Font(R.font.poppins_medium)),
+                                ),
                         )
                     },
                     navigationIcon = {
-                        IconButton(onClick = {
-                            drawerScope.launch { drawerState.open() }
-                        }) {
-                            Icon(
-                                imageVector = Icons.Default.Menu,
-                                contentDescription = "Menu"
-                            )
+                        if (isDashboardDestinationActive) {
+                            MenuDrawerIconButton(onClicked = onMenuDrawerClicked)
+                        } else {
+                            BackArrowIconButton(onClicked = onBackClicked)
                         }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
                 )
-            }
+            },
         ) { screenPadding ->
             PokemonContainer(
                 modifier =
                     Modifier
                         .fillMaxSize()
-                        .padding(screenPadding)
+                        .padding(screenPadding),
             ) {
                 // Place custom scaffold content
                 content()
@@ -90,13 +84,18 @@ fun PokedexScaffoldWithDrawer(
     }
 }
 
+@Suppress("UnusedPrivateMember")
 @PhonePreviews
 @Composable
 private fun PokedexScaffoldWithDrawerPreview() {
     PokedexTheme {
         PokedexScaffoldWithDrawer(
-            drawerScope = rememberCoroutineScope(),
-            drawerState = rememberDrawerState(initialValue = DrawerValue.Open)
+            drawerState = rememberDrawerState(initialValue = DrawerValue.Open),
+            appBarTitle = R.string.app_name,
+            isDashboardDestinationActive = true,
+            onMenuDrawerClicked = {},
+            onMenuItemClicked = {},
+            onBackClicked = {},
         ) { }
     }
 }

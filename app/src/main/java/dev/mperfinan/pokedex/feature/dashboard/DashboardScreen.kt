@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber", "LongMethod")
+
 package dev.mperfinan.pokedex.feature.dashboard
 
 import androidx.compose.foundation.Image
@@ -26,14 +28,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -56,189 +55,200 @@ import dev.mperfinan.pokedex.ui.core.composable.SearchField
 import dev.mperfinan.pokedex.ui.core.composable.VerticalSpace
 import dev.mperfinan.pokedex.ui.core.preview.PhonePreviews
 import dev.mperfinan.pokedex.ui.theme.PokedexTheme
+import dev.mperfinan.pokedex.utility.VoidCallback
 
-private val news = listOf(
-    PokemonNews(
-        id = 1,
-        category = "Trading Card Game",
-        title = "Mega Dragonite Reveal Has Fans Uber Excited for Pokémon Legends",
-        imageRes = R.drawable.img_pokemon_news_1
-    ),
-    PokemonNews(
-        id = 2,
-        category = "Gaming",
-        title = "Pokémon TCG Pocket: Wisdom of Sea and Sky Expansion Revealed",
-        imageRes = R.drawable.img_pokemon_news_2
-    ),
-    PokemonNews(
-        id = 3,
-        category = "Event",
-        title = "Pokémon GO Safari Zone Announced for Hoenn Region",
-        imageRes = R.drawable.img_pokemon_news_3
-    ),
-    PokemonNews(
-        id = 4,
-        category = "General",
-        title = "Celebrate the Pokémon TCG: Mega Lucario ex Figure Collection with Pokémon GO",
-        imageRes = R.drawable.img_pokemon_news_4
-    ),
-    PokemonNews(
-        id = 5,
-        category = "Video Games and Apps",
-        title = "Costumed Pokémon Take Over the Pokémon GO Halloween 2025 Part II Event\n",
-        imageRes = R.drawable.img_pokemon_news_5
+private val news =
+    listOf(
+        PokemonNews(
+            id = 1,
+            category = "Trading Card Game",
+            title = "Mega Dragonite Reveal Has Fans Uber Excited for Pokémon Legends",
+            imageRes = R.drawable.img_pokemon_news_1,
+        ),
+        PokemonNews(
+            id = 2,
+            category = "Gaming",
+            title = "Pokémon TCG Pocket: Wisdom of Sea and Sky Expansion Revealed",
+            imageRes = R.drawable.img_pokemon_news_2,
+        ),
+        PokemonNews(
+            id = 3,
+            category = "Event",
+            title = "Pokémon GO Safari Zone Announced for Hoenn Region",
+            imageRes = R.drawable.img_pokemon_news_3,
+        ),
+        PokemonNews(
+            id = 4,
+            category = "General",
+            title = "Celebrate the Pokémon TCG: Mega Lucario ex Figure Collection with Pokémon GO",
+            imageRes = R.drawable.img_pokemon_news_4,
+        ),
+        PokemonNews(
+            id = 5,
+            category = "Video Games and Apps",
+            title = "Costumed Pokémon Take Over the Pokémon GO Halloween 2025 Part II Event\n",
+            imageRes = R.drawable.img_pokemon_news_5,
+        ),
     )
-)
 
 private val DefaultHorizontalPadding = 18.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(
-    modifier: Modifier = Modifier,
+    onPokedexClick: VoidCallback,
+    onItemsClick: VoidCallback,
+    onMovesClick: VoidCallback,
+    onTypesClick: VoidCallback,
+    onFavoritesClick: VoidCallback,
+    onPokemonNewsClick: VoidCallback,
 ) {
     val scrollingState = rememberScrollState()
-    val drawerScope = rememberCoroutineScope()
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val listState = rememberLazyListState()
     val flingBehavior = rememberSnapFlingBehavior(listState)
 
-    PokedexScaffoldWithDrawer(
-        drawerScope = drawerScope,
-        drawerState = drawerState,
-    ) {
-        Column(modifier = Modifier.verticalScroll(scrollingState)) {
-            Text(
-                modifier = Modifier.padding(horizontal = DefaultHorizontalPadding, vertical = 20.dp),
-                text = stringResource(R.string.dashboard_header_label),
-                style = MaterialTheme.typography.headlineSmall.copy(
+    Column(modifier = Modifier.verticalScroll(scrollingState)) {
+        Text(
+            modifier = Modifier.padding(horizontal = DefaultHorizontalPadding, vertical = 20.dp),
+            text = stringResource(R.string.dashboard_header_label),
+            style =
+                MaterialTheme.typography.headlineSmall.copy(
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.inverseSurface,
                     fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                )
-            )
-
-            SearchField(
-                searchInput = "",
-                onValueChange = {},
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = DefaultHorizontalPadding),
-                placeHolder = stringResource(R.string.search_placeholder_label),
-            )
-
-            VerticalSpace(20.dp)
-
-            DashboardButton(
-                label = stringResource(R.string.pokedex_button_label),
-                gradientBackgroundColor = Brush.linearGradient(
-                    colors = listOf(Color(0xFF368E43), Color(0xFF5ABEA5))
                 ),
-                onClick = { },
-                modifier = Modifier.fillMaxWidth(),
-                imageWidthFraction = 0.6f,
-                imageAspectRatio = 1.8f,
+        )
+
+        SearchField(
+            searchInput = "",
+            onValueChange = {},
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = DefaultHorizontalPadding),
+            placeHolder = stringResource(R.string.search_placeholder_label),
+        )
+
+        VerticalSpace(20.dp)
+
+        DashboardButton(
+            label = stringResource(R.string.pokedex_button_label),
+            gradientBackgroundColor =
+                Brush.linearGradient(
+                    colors = listOf(Color(0xFF368E43), Color(0xFF5ABEA5)),
+                ),
+            onClick = onPokedexClick,
+            modifier = Modifier.fillMaxWidth(),
+            imageWidthFraction = 0.6f,
+            imageAspectRatio = 1.8f,
+        )
+
+        VerticalSpace(8.dp)
+
+        Row(
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = DefaultHorizontalPadding),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            DashboardButton(
+                label = stringResource(R.string.items_button_label),
+                gradientBackgroundColor =
+                    Brush.linearGradient(
+                        colors = listOf(Color(0xFFA80003), Color(0xFFF26CA1)),
+                    ),
+                onClick = onItemsClick,
+                modifier = Modifier.weight(1f),
+                horizontalPadding = 0.dp,
             )
+            DashboardButton(
+                label = stringResource(R.string.moves_button_label),
+                gradientBackgroundColor =
+                    Brush.linearGradient(
+                        colors = listOf(Color(0xFF2A55A4), Color(0xFF59A9FC)),
+                    ),
+                onClick = onMovesClick,
+                modifier = Modifier.weight(1f),
+                horizontalPadding = 0.dp,
+            )
+        }
 
-            VerticalSpace(8.dp)
+        VerticalSpace(8.dp)
 
-            Row(
-                modifier = Modifier
+        Row(
+            modifier =
+                Modifier
                     .fillMaxWidth()
                     .padding(horizontal = DefaultHorizontalPadding),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                DashboardButton(
-                    label = stringResource(R.string.items_button_label),
-                    gradientBackgroundColor = Brush.linearGradient(
-                        colors = listOf(Color(0xFFA80003), Color(0xFFF26CA1))
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            DashboardButton(
+                label = stringResource(R.string.types_button_label),
+                gradientBackgroundColor =
+                    Brush.linearGradient(
+                        colors = listOf(Color(0xFFEBA04B), Color(0xFFF6CC51)),
                     ),
-                    onClick = { },
-                    modifier = Modifier.weight(1f),
-                    horizontalPadding = 0.dp,
-                )
-                DashboardButton(
-                    label = stringResource(R.string.moves_button_label),
-                    gradientBackgroundColor = Brush.linearGradient(
-                        colors = listOf(Color(0xFF2A55A4), Color(0xFF59A9FC))
+                onClick = onTypesClick,
+                modifier = Modifier.weight(1f),
+                horizontalPadding = 0.dp,
+            )
+            DashboardButton(
+                label = stringResource(R.string.favorites_button_label),
+                gradientBackgroundColor =
+                    Brush.linearGradient(
+                        colors = listOf(Color(0xFF422F2F), Color(0xFFFFA98F)),
                     ),
-                    onClick = { },
-                    modifier = Modifier.weight(1f),
-                    horizontalPadding = 0.dp,
-                )
-            }
+                onClick = onFavoritesClick,
+                modifier = Modifier.weight(1f),
+                horizontalPadding = 0.dp,
+            )
+        }
 
-            VerticalSpace(8.dp)
-
-            Row(
-                modifier = Modifier
+        Row(
+            modifier =
+                Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = DefaultHorizontalPadding),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                DashboardButton(
-                    label = stringResource(R.string.types_button_label),
-                    gradientBackgroundColor = Brush.linearGradient(
-                        colors = listOf(Color(0xFFEBA04B), Color(0xFFF6CC51))
-                    ),
-                    onClick = { },
-                    modifier = Modifier.weight(1f),
-                    horizontalPadding = 0.dp,
-                )
-                DashboardButton(
-                    label = stringResource(R.string.favorites_button_label),
-                    gradientBackgroundColor = Brush.linearGradient(
-                        colors = listOf(Color(0xFF422F2F), Color(0xFFFFA98F))
-                    ),
-                    onClick = { },
-                    modifier = Modifier.weight(1f),
-                    horizontalPadding = 0.dp,
-                )
-            }
-
-            Row(
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = DefaultHorizontalPadding, vertical = 26.dp),
-                horizontalArrangement = Arrangement.Absolute.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = stringResource(R.string.pokemon_news_section_label),
-                    style = MaterialTheme.typography.titleMedium.copy(
+                    .padding(horizontal = DefaultHorizontalPadding, vertical = 26.dp),
+            horizontalArrangement = Arrangement.Absolute.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = stringResource(R.string.pokemon_news_section_label),
+                style =
+                    MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.SemiBold,
                         fontFamily = FontFamily(Font(R.font.poppins_medium)),
                     ),
-                )
+            )
 
-                TextButton(
-                    onClick = {},
-                    colors = ButtonDefaults.textButtonColors(
-                        contentColor = MaterialTheme.colorScheme.tertiary
+            TextButton(
+                onClick = onPokemonNewsClick,
+                colors =
+                    ButtonDefaults.textButtonColors(
+                        contentColor = MaterialTheme.colorScheme.tertiary,
                     ),
-                    contentPadding = PaddingValues(0.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.view_all_news_button_label),
-                        style = MaterialTheme.typography.titleSmall.copy(
+                contentPadding = PaddingValues(0.dp),
+            ) {
+                Text(
+                    text = stringResource(R.string.view_all_news_button_label),
+                    style =
+                        MaterialTheme.typography.titleSmall.copy(
                             fontWeight = FontWeight.SemiBold,
                             fontFamily = FontFamily(Font(R.font.poppins_medium)),
                         ),
-                        textDecoration = TextDecoration.Underline
-                    )
-                }
+                    textDecoration = TextDecoration.Underline,
+                )
             }
-
-            PokemonNews(
-                listState = listState,
-                flingBehavior = flingBehavior,
-                news = news
-            )
-
-            VerticalSpace(20.dp)
         }
+
+        PokemonNews(
+            listState = listState,
+            flingBehavior = flingBehavior,
+            news = news,
+        )
+
+        VerticalSpace(20.dp)
     }
 }
 
@@ -252,7 +262,7 @@ private fun PokemonNews(
         state = listState,
         flingBehavior = flingBehavior,
         contentPadding = PaddingValues(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         items(news) { newsItem ->
             NewsCard(news = newsItem) {
@@ -265,15 +275,16 @@ private fun PokemonNews(
 @Composable
 private fun NewsCard(
     news: PokemonNews,
-    onCardClick: () -> Unit,
+    onCardClick: VoidCallback,
 ) {
     Card(
         shape = RoundedCornerShape(16.dp),
-        modifier = Modifier
-            .width(260.dp)
-            .shadow(elevation = 6.dp, shape = RoundedCornerShape(16.dp))
-            .clickable(onClick = onCardClick),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        modifier =
+            Modifier
+                .width(260.dp)
+                .shadow(elevation = 6.dp, shape = RoundedCornerShape(16.dp))
+                .clickable(onClick = onCardClick),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
     ) {
         Box {
             // Background image
@@ -294,28 +305,30 @@ private fun NewsCard(
                         .background(
                             Brush.verticalGradient(
                                 colors = listOf(Color.Transparent, Color.Black.copy(alpha = 1f)),
-                            )
-                        )
+                            ),
+                        ),
             )
             // Text content
             Column(
-                modifier = Modifier
-                    .align(Alignment.BottomStart)
-                    .padding(12.dp)
+                modifier =
+                    Modifier
+                        .align(Alignment.BottomStart)
+                        .padding(12.dp),
             ) {
                 Text(
                     text = news.category.uppercase(),
-                    style = MaterialTheme.typography.labelSmall.copy(color = Color.Yellow)
+                    style = MaterialTheme.typography.labelSmall.copy(color = Color.Yellow),
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = news.title,
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        color = Color.White,
-                        fontWeight = FontWeight.SemiBold
-                    ),
+                    style =
+                        MaterialTheme.typography.bodyMedium.copy(
+                            color = Color.White,
+                            fontWeight = FontWeight.SemiBold,
+                        ),
                     maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
                 )
             }
         }
@@ -326,43 +339,47 @@ private fun NewsCard(
 fun DashboardButton(
     label: String,
     gradientBackgroundColor: Brush,
-    onClick: () -> Unit,
+    onClick: VoidCallback,
     modifier: Modifier = Modifier,
     imageWidthFraction: Float? = null,
     imageAspectRatio: Float? = null,
     horizontalPadding: Dp? = null,
 ) {
     Box(
-        modifier = modifier
-            .height(88.dp)
-            .padding(horizontal = horizontalPadding ?: DefaultHorizontalPadding)
-            .clip(RoundedCornerShape(16.dp))
-            .background(brush = gradientBackgroundColor)
-            .clickable(onClick = onClick)
+        modifier =
+            modifier
+                .height(88.dp)
+                .padding(horizontal = horizontalPadding ?: DefaultHorizontalPadding)
+                .clip(RoundedCornerShape(16.dp))
+                .background(brush = gradientBackgroundColor)
+                .clickable(onClick = onClick),
     ) {
         // Pokéball faint background
         Image(
             painter = painterResource(R.drawable.img_pokeball_button_bg_logo),
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .fillMaxWidth(imageWidthFraction ?: 0.74f)
-                .aspectRatio(imageAspectRatio ?: 1.4f)
+            modifier =
+                Modifier
+                    .align(Alignment.CenterEnd)
+                    .fillMaxWidth(imageWidthFraction ?: 0.74f)
+                    .aspectRatio(imageAspectRatio ?: 1.4f),
         )
 
         // Label text
         Text(
             text = label,
             color = Color.White,
-            style = MaterialTheme.typography.headlineSmall.copy(
-                fontWeight = FontWeight.SemiBold,
-                fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                fontSize = 18.sp,
-            ),
-            modifier = Modifier
-                .align(Alignment.CenterStart)
-                .padding(start = 24.dp)
+            style =
+                MaterialTheme.typography.headlineSmall.copy(
+                    fontWeight = FontWeight.SemiBold,
+                    fontFamily = FontFamily(Font(R.font.poppins_medium)),
+                    fontSize = 18.sp,
+                ),
+            modifier =
+                Modifier
+                    .align(Alignment.CenterStart)
+                    .padding(start = 24.dp),
         )
     }
 }
@@ -378,6 +395,13 @@ data class PokemonNews(
 @Composable
 fun DashboardScreenPreview() {
     PokedexTheme {
-        DashboardScreen()
+        DashboardScreen(
+            onPokedexClick = {},
+            onItemsClick = {},
+            onMovesClick = {},
+            onTypesClick = {},
+            onFavoritesClick = {},
+            onPokemonNewsClick = {},
+        )
     }
 }

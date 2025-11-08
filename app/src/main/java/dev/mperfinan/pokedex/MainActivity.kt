@@ -7,10 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import dev.mperfinan.pokedex.feature.dashboard.DashboardScreen
 import dev.mperfinan.pokedex.feature.onboarding.OnboardingScreen
 import dev.mperfinan.pokedex.ui.theme.PokedexTheme
-import kotlin.getValue
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -29,7 +27,7 @@ class MainActivity : ComponentActivity() {
                     if (isAppFirstLaunch) {
                         OnboardingScreen { viewModel.setAppLaunched(it) }
                     } else {
-                        DashboardScreen()
+                        PokedexApp()
                     }
                 }
             }

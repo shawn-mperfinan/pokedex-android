@@ -13,6 +13,11 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.painterResource
 import dev.mperfinan.pokedex.R
+import dev.mperfinan.pokedex.utility.UiContent
+
+private const val MAX_FRACTION_WIDTH = 0.6f
+private const val ASPECT_RATIO = 1f
+private const val RELATIVE_HEIGHT = 0.12f
 
 /**
  * A container composable with a semi-transparent Pokeball logo in the background.
@@ -26,7 +31,7 @@ import dev.mperfinan.pokedex.R
 @Composable
 fun PokemonContainer(
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit,
+    content: UiContent,
 ) {
     val containerSize = LocalWindowInfo.current.containerSize
     val density = LocalDensity.current
@@ -35,16 +40,17 @@ fun PokemonContainer(
         Image(
             painter = painterResource(id = R.drawable.img_pokeball_bg_logo),
             contentDescription = "pokeball bg logo",
-            modifier = Modifier
-                // scales proportionally
-                .fillMaxWidth(0.6f)
-                .aspectRatio(1f)
-                .align(Alignment.TopEnd)
-                .graphicsLayer {
-                    // Move up relative to total height, roughly 12% of screen height
-                    val yOffsetPx = with(density) { -(containerSize.height.toDp() * 0.12f).toPx() }
-                    translationY = yOffsetPx
-                },
+            modifier =
+                Modifier
+                    // scales proportionally
+                    .fillMaxWidth(MAX_FRACTION_WIDTH)
+                    .aspectRatio(ASPECT_RATIO)
+                    .align(Alignment.TopEnd)
+                    .graphicsLayer {
+                        // Move up relative to total height, roughly 12% of screen height
+                        val yOffsetPx = with(density) { -(containerSize.height.toDp() * RELATIVE_HEIGHT).toPx() }
+                        translationY = yOffsetPx
+                    },
             contentScale = ContentScale.Crop,
         )
 

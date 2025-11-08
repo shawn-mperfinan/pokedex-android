@@ -50,6 +50,7 @@ import dev.mperfinan.pokedex.ui.theme.PokedexTheme
 import dev.mperfinan.pokedex.ui.theme.Purple40
 import dev.mperfinan.pokedex.ui.theme.Purple80
 import dev.mperfinan.pokedex.ui.theme.PurpleGrey80
+import dev.mperfinan.pokedex.utility.VoidCallback
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
@@ -240,8 +241,8 @@ private fun StartExploringButton(onClickStartExploring: (Boolean) -> Unit) {
 @Composable
 private fun OnboardingNavigationButtons(
     shouldShowBackButton: Boolean,
-    onBackClick: () -> Unit,
-    onNextClick: () -> Unit,
+    onBackClick: VoidCallback,
+    onNextClick: VoidCallback,
 ) {
     Row(
         modifier =
@@ -272,7 +273,7 @@ private fun NavigationButton(
     buttonLabel: String,
     testTag: String,
     fillColor: Color = Color.Transparent,
-    onClick: () -> Unit,
+    onClick: VoidCallback,
 ) {
     val textColor =
         if (fillColor == Color.Transparent) {

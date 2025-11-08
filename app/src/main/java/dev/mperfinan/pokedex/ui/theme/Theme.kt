@@ -9,6 +9,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import dev.mperfinan.pokedex.utility.UiContent
 
 private val DarkColorScheme =
     darkColorScheme(
@@ -38,7 +39,7 @@ fun PokedexTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
-    content: @Composable () -> Unit,
+    content: UiContent,
 ) {
     val colorScheme =
         when {

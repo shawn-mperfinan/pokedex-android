@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package dev.mperfinan.pokedex.ui.core.composable
 
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import dev.mperfinan.pokedex.R
+import dev.mperfinan.pokedex.utility.ValueChanged
 
 /**
  * A stylized search field with a leading icon, rounded corners, and custom colors.
@@ -22,7 +25,7 @@ import dev.mperfinan.pokedex.R
 @Composable
 fun SearchField(
     searchInput: String,
-    onValueChange: (String) -> Unit,
+    onValueChange: ValueChanged<String>,
     modifier: Modifier = Modifier,
     placeHolder: String = "",
 ) {
@@ -43,15 +46,16 @@ fun SearchField(
         modifier = modifier,
         shape = RoundedCornerShape(40),
         // TODO: replace with proper colors from colorScheme
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = Color.Transparent,
-            unfocusedBorderColor = Color.Transparent,
-            focusedContainerColor = Color(0xFFE5E5E5),
-            unfocusedContainerColor = Color(0xFFE5E5E5),
-            focusedTextColor = Color(0xFF626262),
-            unfocusedTextColor = Color(0xFF626262),
-            focusedPlaceholderColor = Color(0xFF626262),
-            unfocusedPlaceholderColor = Color(0xFF626262)
-        )
+        colors =
+            OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color.Transparent,
+                unfocusedBorderColor = Color.Transparent,
+                focusedContainerColor = Color(0xFFE5E5E5),
+                unfocusedContainerColor = Color(0xFFE5E5E5),
+                focusedTextColor = Color(0xFF626262),
+                unfocusedTextColor = Color(0xFF626262),
+                focusedPlaceholderColor = Color(0xFF626262),
+                unfocusedPlaceholderColor = Color(0xFF626262),
+            ),
     )
 }

@@ -1,4 +1,4 @@
-package dev.mperfinan.pokedex.feature.drawer
+package dev.mperfinan.pokedex.feature.dashboard.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -37,18 +37,18 @@ import dev.mperfinan.pokedex.ui.core.composable.HorizonalSpace
 import dev.mperfinan.pokedex.ui.core.composable.VerticalSpace
 import dev.mperfinan.pokedex.ui.core.preview.PhonePreviews
 import dev.mperfinan.pokedex.ui.theme.PokedexTheme
+import dev.mperfinan.pokedex.utility.ValueChanged
 
 @Composable
-fun PokedexDrawer(
-    onMenuItemClicked: (String) -> Unit
-) {
+fun PokedexDrawer(onMenuItemClicked: ValueChanged<String>) {
     Column(
-        modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxWidth(fraction = 0.7f)
-            .background(MaterialTheme.colorScheme.surface)
-            .statusBarsPadding()
-            .padding(24.dp)
+        modifier =
+            Modifier
+                .fillMaxHeight()
+                .fillMaxWidth(fraction = 0.7f)
+                .background(MaterialTheme.colorScheme.surface)
+                .statusBarsPadding()
+                .padding(24.dp),
     ) {
         DrawerHeader(
             label = stringResource(R.string.app_name),
@@ -93,16 +93,16 @@ private fun DrawerHeader(
     iconPainter: Painter,
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 12.dp, horizontal = 4.dp),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = 12.dp, horizontal = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-
         Icon(
             painter = iconPainter,
             contentDescription = label,
-            tint = Color.Unspecified
+            tint = Color.Unspecified,
         )
 
         HorizonalSpace(16.dp)
@@ -110,10 +110,11 @@ private fun DrawerHeader(
         Text(
             text = label,
             color = MaterialTheme.colorScheme.inverseSurface,
-            style = MaterialTheme.typography.titleMedium.copy(
-                fontWeight = FontWeight.SemiBold,
-                fontFamily = FontFamily(Font(R.font.poppins_medium)),
-            ),
+            style =
+                MaterialTheme.typography.titleMedium.copy(
+                    fontWeight = FontWeight.SemiBold,
+                    fontFamily = FontFamily(Font(R.font.poppins_medium)),
+                ),
         )
     }
 }
@@ -122,21 +123,21 @@ private fun DrawerHeader(
 private fun DrawerItem(
     label: String,
     icon: ImageVector,
-    onClick: (String) -> Unit
+    onClick: ValueChanged<String>,
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick(label) }
-            .padding(vertical = 12.dp, horizontal = 4.dp),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clickable { onClick(label) }
+                .padding(vertical = 12.dp, horizontal = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-
         Icon(
             imageVector = icon,
             contentDescription = label,
             tint = MaterialTheme.colorScheme.inverseSurface,
-            modifier = Modifier.size(22.dp)
+            modifier = Modifier.size(22.dp),
         )
 
         HorizonalSpace(16.dp)
@@ -144,14 +145,16 @@ private fun DrawerItem(
         Text(
             text = label,
             color = MaterialTheme.colorScheme.inverseSurface,
-            style = MaterialTheme.typography.titleSmall.copy(
-                fontWeight = FontWeight.Normal,
-                fontFamily = FontFamily(Font(R.font.poppins_medium)),
-            ),
+            style =
+                MaterialTheme.typography.titleSmall.copy(
+                    fontWeight = FontWeight.Normal,
+                    fontFamily = FontFamily(Font(R.font.poppins_medium)),
+                ),
         )
     }
 }
 
+@Suppress("UnusedPrivateMember")
 @PhonePreviews
 @Composable
 private fun PokedexDrawerPreview() {
