@@ -161,6 +161,19 @@ dependencies {
     // Preferences Datastore
     implementation(libs.androidx.datastore.preferences)
 
+    // Retrofit
+    implementation(libs.squareup.retrofit2)
+    implementation(libs.squareup.retrofit2.converter.gson)
+    implementation(libs.google.gson)
+    implementation(libs.squareup.okhttp3.logging.interceptor)
+
+    // Coil Image Loading
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+
+    // MockWebserver
+    testImplementation(libs.squareup.okhttp3.mockwebserver)
+
     // JUnit 4
     testImplementation(libs.junit4)
 

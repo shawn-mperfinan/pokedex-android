@@ -15,16 +15,16 @@ fun NavGraphBuilder.dashboardScreen(
     onMovesClick: VoidCallback,
     onTypesClick: VoidCallback,
     onFavoritesClick: VoidCallback,
-    onPokemonNewsClick: VoidCallback,
+    onSeeAllNewsClick: VoidCallback,
 ) {
     composable<DashboardRoute> {
         DashboardScreen(
-            onPokedexClick,
-            onItemsClick,
-            onMovesClick,
-            onTypesClick,
-            onFavoritesClick,
-            onPokemonNewsClick,
+            onPokedexClick = onPokedexClick,
+            onItemsClick = onItemsClick,
+            onMovesClick = onMovesClick,
+            onTypesClick = onTypesClick,
+            onFavoritesClick = onFavoritesClick,
+            onSeeAllNewsClick = onSeeAllNewsClick,
         )
     }
 }

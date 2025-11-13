@@ -33,7 +33,7 @@ fun MainNavHost(mainNavController: NavHostController) {
             onMovesClick = mainNavController::navigateToMovesScreen,
             onTypesClick = mainNavController::navigateToTypesScreen,
             onFavoritesClick = mainNavController::navigateToFavoritesScreen,
-            onPokemonNewsClick = mainNavController::navigateToPokemonNewsScreen,
+            onSeeAllNewsClick = mainNavController::navigateToPokemonNewsScreen,
         )
 
         pokedexScreen()
