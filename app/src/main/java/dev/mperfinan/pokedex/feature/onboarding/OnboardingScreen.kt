@@ -1,5 +1,3 @@
-@file:Suppress("MagicNumber")
-
 package dev.mperfinan.pokedex.feature.onboarding
 
 import android.annotation.SuppressLint
@@ -44,12 +42,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.mperfinan.pokedex.R
-import dev.mperfinan.pokedex.ui.core.PhonePreviews
+import dev.mperfinan.pokedex.ui.core.preview.PhonePreviews
 import dev.mperfinan.pokedex.ui.theme.Pink40
 import dev.mperfinan.pokedex.ui.theme.PokedexTheme
 import dev.mperfinan.pokedex.ui.theme.Purple40
 import dev.mperfinan.pokedex.ui.theme.Purple80
 import dev.mperfinan.pokedex.ui.theme.PurpleGrey80
+import dev.mperfinan.pokedex.utility.VoidCallback
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
@@ -57,6 +56,9 @@ const val ONBOARDING_PAGER_TEST_TAG = "OnboardingPager"
 const val BACK_BUTTON_TEST_TAG = "BackNavigationButton"
 const val NEXT_BUTTON_TEST_TAG = "NextNavigationButton"
 const val START_EXPLORING_BUTTON_TEST_TAG = "StartExploringNavigationButton"
+
+private const val IMAGE_ASPECT_RATIO = 0.96f
+private const val TOP_PADDING = 16
 
 @Composable
 fun OnboardingScreen(onStartExploring: (Boolean) -> Unit) {
@@ -126,8 +128,8 @@ private fun OnboardingPagerContent(
     currentOnboardingScreen: OnboardingScreenItem,
     pagerOffset: Float,
 ) {
-    val imageTopPadding = (LocalConfiguration.current.screenHeightDp.div(16)).dp
-    val imageAlpha by animateFloatAsState(targetValue = 0.96f, label = "")
+    val imageTopPadding = (LocalConfiguration.current.screenHeightDp.div(TOP_PADDING)).dp
+    val imageAlpha by animateFloatAsState(targetValue = IMAGE_ASPECT_RATIO, label = "")
     val animationTween = remember { tween<Float>(durationMillis = 300) }
     val alpha by animateFloatAsState(
         targetValue = 1f - pagerOffset.absoluteValue,
@@ -155,7 +157,7 @@ private fun OnboardingPagerContent(
         Image(
             modifier =
                 Modifier
-                    .aspectRatio(0.96f)
+                    .aspectRatio(IMAGE_ASPECT_RATIO)
                     .fillMaxWidth()
                     .padding(top = imageTopPadding)
                     .alpha(imageAlpha),
@@ -240,8 +242,8 @@ private fun StartExploringButton(onClickStartExploring: (Boolean) -> Unit) {
 @Composable
 private fun OnboardingNavigationButtons(
     shouldShowBackButton: Boolean,
-    onBackClick: () -> Unit,
-    onNextClick: () -> Unit,
+    onBackClick: VoidCallback,
+    onNextClick: VoidCallback,
 ) {
     Row(
         modifier =
@@ -272,7 +274,7 @@ private fun NavigationButton(
     buttonLabel: String,
     testTag: String,
     fillColor: Color = Color.Transparent,
-    onClick: () -> Unit,
+    onClick: VoidCallback,
 ) {
     val textColor =
         if (fillColor == Color.Transparent) {

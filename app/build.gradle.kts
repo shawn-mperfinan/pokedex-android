@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.roboelectric.extension)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 // Load local.properties if it exists
@@ -140,6 +141,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
@@ -157,6 +160,19 @@ dependencies {
 
     // Preferences Datastore
     implementation(libs.androidx.datastore.preferences)
+
+    // Retrofit
+    implementation(libs.squareup.retrofit2)
+    implementation(libs.squareup.retrofit2.converter.gson)
+    implementation(libs.google.gson)
+    implementation(libs.squareup.okhttp3.logging.interceptor)
+
+    // Coil Image Loading
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+
+    // MockWebserver
+    testImplementation(libs.squareup.okhttp3.mockwebserver)
 
     // JUnit 4
     testImplementation(libs.junit4)

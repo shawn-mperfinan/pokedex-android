@@ -34,8 +34,9 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.mperfinan.pokedex.ui.core.PhonePreviews
+import dev.mperfinan.pokedex.ui.core.preview.PhonePreviews
 import dev.mperfinan.pokedex.ui.theme.PokedexTheme
+import dev.mperfinan.pokedex.utility.VoidCallback
 import kotlinx.coroutines.delay
 
 @SuppressLint("CustomSplashScreen")
@@ -69,7 +70,7 @@ class SplashActivity : ComponentActivity() {
 }
 
 @Composable
-private fun SplashScreen(onTimeout: () -> Unit) {
+private fun SplashScreen(onTimeout: VoidCallback) {
     // Start smaller for bounce
     val scale = remember { Animatable(SplashActivity.INITIAL_BOUNCE_SCALE) }
     val alpha = remember { Animatable(SplashActivity.INITIAL_ANIMATION_FADE) }
