@@ -11,8 +11,6 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import dev.mperfinan.pokedex.utility.manager.PreferencesDatastoreManager
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -24,7 +22,6 @@ import java.io.File
 @OptIn(ExperimentalCoroutinesApi::class)
 @ExtendWith(RobolectricExtension::class)
 class PreferencesDatastoreManagerTest {
-    private val testScope = TestScope(UnconfinedTestDispatcher())
     private val testKey = booleanPreferencesKey("test_key")
 
     private lateinit var context: Context
@@ -47,7 +44,7 @@ class PreferencesDatastoreManagerTest {
 
     @Test
     fun `retrieve should return prefs default value on its initial state`() {
-        testScope.runTest {
+        runTest {
             datastoreManager.retrieve(testKey, true).test {
                 val value = awaitItem()
                 assertThat(value).isTrue()
@@ -58,7 +55,7 @@ class PreferencesDatastoreManagerTest {
 
     @Test
     fun `retrieve should return newly assigned prefs value`() {
-        testScope.runTest {
+        runTest {
             datastoreManager.store(testKey, false)
 
             datastoreManager.retrieve(testKey, true).test {
@@ -71,7 +68,7 @@ class PreferencesDatastoreManagerTest {
 
     @Test
     fun `retrieve should return default value once assigned prefs value is cleared`() {
-        testScope.runTest {
+        runTest {
             datastoreManager.store(testKey, false)
 
             datastoreManager.clear(testKey)

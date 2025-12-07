@@ -12,8 +12,6 @@ import dev.mperfinan.pokedex.data.source.datastore.IUserPreferencesDatastore
 import dev.mperfinan.pokedex.data.source.datastore.UserPreferencesDatastore
 import dev.mperfinan.pokedex.utility.manager.PreferencesDatastoreManager
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -25,7 +23,6 @@ import java.io.File
 @OptIn(ExperimentalCoroutinesApi::class)
 @ExtendWith(RobolectricExtension::class)
 class UserPreferencesDatastoreTest {
-    private val testScope = TestScope(UnconfinedTestDispatcher())
     private lateinit var context: Context
     private lateinit var testFile: File
     private lateinit var dataStore: DataStore<Preferences>
@@ -48,7 +45,7 @@ class UserPreferencesDatastoreTest {
 
     @Test
     fun `getIsAppFirstLaunch should retrieve (true) as IS_APP_FIRST_LAUNCH's initial value when performed`() {
-        testScope.runTest {
+        runTest {
             userPreferencesDatastore.getIsAppFirstLaunch().test {
                 val isAppFirstLaunch = awaitItem()
                 assertThat(isAppFirstLaunch).isTrue()
@@ -59,7 +56,7 @@ class UserPreferencesDatastoreTest {
 
     @Test
     fun `getIsAppFirstLaunch should retrieve IS_APP_FIRST_LAUNCH's new value when setIsAppFirstLaunch is performed`() {
-        testScope.runTest {
+        runTest {
             userPreferencesDatastore.setIsAppFirstLaunch(false)
             userPreferencesDatastore.getIsAppFirstLaunch().test {
                 val isAppFirstLaunch = awaitItem()
