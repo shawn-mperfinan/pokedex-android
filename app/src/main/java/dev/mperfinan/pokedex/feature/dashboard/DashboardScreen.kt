@@ -25,7 +25,7 @@ val CommonVerticalSpace = 20.dp
 
 @Composable
 fun DashboardScreen(
-    viewModel: DashboardVM = hiltViewModel(),
+//    viewModel: DashboardVM = hiltViewModel(),
     onPokedexClick: VoidCallback,
     onItemsClick: VoidCallback,
     onMovesClick: VoidCallback,
@@ -33,7 +33,7 @@ fun DashboardScreen(
     onFavoritesClick: VoidCallback,
     onSeeAllNewsClick: VoidCallback,
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+//    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val scrollingState = rememberScrollState()
     val listState = rememberLazyListState()
     val flingBehavior = rememberSnapFlingBehavior(listState)
@@ -56,7 +56,7 @@ fun DashboardScreen(
         PokemonNews(
             listState = listState,
             flingBehavior = flingBehavior,
-            uiState = uiState,
+            uiState = DashboardUiState.Loading,
         )
 
         VerticalSpace(CommonVerticalSpace)

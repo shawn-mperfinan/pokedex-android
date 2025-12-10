@@ -18,6 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -37,6 +38,7 @@ fun DashboardButton(
     label: String,
     gradientBackgroundColor: Brush,
     onClick: VoidCallback,
+    testTag: String,
     modifier: Modifier = Modifier,
     imageWidthFraction: Float? = null,
     imageAspectRatio: Float? = null,
@@ -49,7 +51,8 @@ fun DashboardButton(
                 .padding(horizontal = horizontalPadding ?: DefaultHorizontalPadding)
                 .clip(RoundedCornerShape(16.dp))
                 .background(brush = gradientBackgroundColor)
-                .clickable(onClick = onClick),
+                .clickable(onClick = onClick)
+                .testTag(testTag),
     ) {
         // Pokéball faint background
         Image(
