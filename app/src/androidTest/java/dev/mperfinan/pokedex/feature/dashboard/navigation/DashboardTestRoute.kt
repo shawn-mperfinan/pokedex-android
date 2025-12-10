@@ -2,14 +2,15 @@ package dev.mperfinan.pokedex.feature.dashboard.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import dev.mperfinan.pokedex.feature.dashboard.DashboardScreenConnector
+import dev.mperfinan.pokedex.feature.dashboard.DashboardScreen
+import dev.mperfinan.pokedex.feature.dashboard.DashboardUiState
 import dev.mperfinan.pokedex.utility.VoidCallback
 import kotlinx.serialization.Serializable
 
 @Serializable
-object DashboardRoute
+object DashboardTestRoute
 
-fun NavGraphBuilder.dashboardScreen(
+fun NavGraphBuilder.dashboardTestScreen(
     onPokedexClick: VoidCallback,
     onItemsClick: VoidCallback,
     onMovesClick: VoidCallback,
@@ -17,8 +18,9 @@ fun NavGraphBuilder.dashboardScreen(
     onFavoritesClick: VoidCallback,
     onSeeAllNewsClick: VoidCallback,
 ) {
-    composable<DashboardRoute> {
-        DashboardScreenConnector(
+    composable<DashboardTestRoute> {
+        DashboardScreen(
+            uiState = DashboardUiState.Loading,
             onPokedexClick = onPokedexClick,
             onItemsClick = onItemsClick,
             onMovesClick = onMovesClick,

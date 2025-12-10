@@ -30,6 +30,17 @@ abstract class PokedexRobot(val composeTestRule: ComposeTestRule) {
             .performClick()
 
     /**
+     * Clicks a UI element identified by its [text]. The element must be displayed and have a click action.
+     *
+     * @param text The text identifying the UI element to interact with.
+     */
+    fun clickByText(text: String) =
+        composeTestRule.onNodeWithText(text)
+            .assertIsDisplayed()
+            .assertHasClickAction()
+            .performClick()
+
+    /**
      * Swipes left on a UI element identified by its [testTag]. The element must be displayed and interactable.
      *
      * @param testTag The test tag identifying the UI element to interact with.

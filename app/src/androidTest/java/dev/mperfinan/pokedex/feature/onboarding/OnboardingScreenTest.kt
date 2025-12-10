@@ -1,6 +1,6 @@
 package dev.mperfinan.pokedex.feature.onboarding
 
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.test.junit4.createComposeRule
 import dev.mperfinan.pokedex.R
 import dev.mperfinan.pokedex.ui.theme.PokedexTheme
@@ -21,21 +21,19 @@ class OnboardingScreenTest {
     @Before
     fun setupOnboardingScreen() {
         composeTestRule.setContent {
-            val context = LocalContext.current
-
             fakeOnboardingScreenItems =
                 listOf(
                     Pair(
-                        context.getString(R.string.pokemon_news_onboarding_label),
-                        context.getString(R.string.pokemon_news_onboarding_description),
+                        stringResource(R.string.pokemon_news_onboarding_label),
+                        stringResource(R.string.pokemon_news_onboarding_description),
                     ),
                     Pair(
-                        context.getString(R.string.pokedex_onboarding_label),
-                        context.getString(R.string.pokedex_onboarding_description),
+                        stringResource(R.string.pokedex_onboarding_label),
+                        stringResource(R.string.pokedex_onboarding_description),
                     ),
                     Pair(
-                        context.getString(R.string.favorites_onboarding_label),
-                        context.getString(R.string.favorites_onboarding_description),
+                        stringResource(R.string.favorites_onboarding_label),
+                        stringResource(R.string.favorites_onboarding_description),
                     ),
                 )
             PokedexTheme {

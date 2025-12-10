@@ -6,6 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -15,6 +16,8 @@ import androidx.compose.ui.unit.sp
 import dev.mperfinan.pokedex.R
 import dev.mperfinan.pokedex.ui.core.preview.PhonePreviews
 import dev.mperfinan.pokedex.ui.theme.PokedexTheme
+
+const val MOVES_SCREEN_TEST_TAG = "MovesScreen"
 
 @Composable
 fun MovesScreen() {
@@ -29,7 +32,8 @@ fun MovesScreen() {
             ),
         modifier =
             Modifier
-                .padding(start = 24.dp),
+                .padding(start = 24.dp)
+                .testTag(MOVES_SCREEN_TEST_TAG),
     )
 }
 

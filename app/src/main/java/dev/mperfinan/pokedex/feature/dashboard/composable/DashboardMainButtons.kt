@@ -13,6 +13,11 @@ import dev.mperfinan.pokedex.feature.dashboard.DefaultHorizontalPadding
 import dev.mperfinan.pokedex.ui.core.composable.VerticalSpace
 import dev.mperfinan.pokedex.utility.VoidCallback
 
+const val POKEDEX_BUTTON_TEST_TAG = "PokedexMainButton"
+const val ITEMS_BUTTON_TEST_TAG = "ItemsMainButton"
+const val MOVES_BUTTON_TEST_TAG = "MovesMainButton"
+const val TYPES_BUTTON_TEST_TAG = "TypesMainButton"
+const val FAVORITES_BUTTON_TEST_TAG = "FavoritesMainButton"
 private val ZeroPadding = 0.dp
 private val CommonSpace = 8.dp
 
@@ -28,6 +33,7 @@ fun DashboardMainButtons(
         label = stringResource(R.string.pokedex_button_label),
         gradientBackgroundColor = DashboardGradientBrush.POKEDEX,
         onClick = onPokedexClick,
+        testTag = POKEDEX_BUTTON_TEST_TAG,
         modifier = Modifier.fillMaxWidth(),
         imageWidthFraction = 0.6f,
         imageAspectRatio = 1.8f,
@@ -46,6 +52,7 @@ fun DashboardMainButtons(
             label = stringResource(R.string.items_button_label),
             gradientBackgroundColor = DashboardGradientBrush.ITEMS,
             onClick = onItemsClick,
+            testTag = ITEMS_BUTTON_TEST_TAG,
             modifier = Modifier.weight(1f),
             horizontalPadding = ZeroPadding,
         )
@@ -53,6 +60,7 @@ fun DashboardMainButtons(
             label = stringResource(R.string.moves_button_label),
             gradientBackgroundColor = DashboardGradientBrush.MOVES,
             onClick = onMovesClick,
+            testTag = MOVES_BUTTON_TEST_TAG,
             modifier = Modifier.weight(1f),
             horizontalPadding = ZeroPadding,
         )
@@ -71,6 +79,7 @@ fun DashboardMainButtons(
             label = stringResource(R.string.types_button_label),
             gradientBackgroundColor = DashboardGradientBrush.TYPES,
             onClick = onTypesClick,
+            testTag = TYPES_BUTTON_TEST_TAG,
             modifier = Modifier.weight(1f),
             horizontalPadding = ZeroPadding,
         )
@@ -78,6 +87,7 @@ fun DashboardMainButtons(
             label = stringResource(R.string.favorites_button_label),
             gradientBackgroundColor = DashboardGradientBrush.FAVORITES,
             onClick = onFavoritesClick,
+            testTag = FAVORITES_BUTTON_TEST_TAG,
             modifier = Modifier.weight(1f),
             horizontalPadding = ZeroPadding,
         )
