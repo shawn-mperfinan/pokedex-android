@@ -6,22 +6,21 @@ import dev.mperfinan.pokedex.feature.dashboard.composable.ITEMS_BUTTON_TEST_TAG
 import dev.mperfinan.pokedex.feature.dashboard.composable.MOVES_BUTTON_TEST_TAG
 import dev.mperfinan.pokedex.feature.dashboard.composable.POKEDEX_BUTTON_TEST_TAG
 import dev.mperfinan.pokedex.feature.dashboard.composable.TYPES_BUTTON_TEST_TAG
+import dev.mperfinan.pokedex.feature.favorites.FAVORITES_SCREEN_TEST_TAG
+import dev.mperfinan.pokedex.feature.items.ITEMS_SCREEN_TEST_TAG
+import dev.mperfinan.pokedex.feature.moves.MOVES_SCREEN_TEST_TAG
+import dev.mperfinan.pokedex.feature.news.POKEMON_NEWS_SCREEN_TEST_TAG
+import dev.mperfinan.pokedex.feature.pokedex.POKEDEX_SCREEN_TEST_TAG
+import dev.mperfinan.pokedex.feature.types.TYPES_SCREEN_TEST_TAG
 import dev.mperfinan.pokedex.utility.robot.PokedexRobot
 
 class DashboardScreenRobot(
     composeTestRule: ComposeContentTestRule,
-    private val labels: Map<String, String>,
+    labels: Map<String, String>,
 ) : PokedexRobot(composeTestRule) {
-    //    private val dashboardHeaderLabel by composeTestRule.stringResource(R.string.dashboard_header_label)
     private val dashboardHeaderLabel = labels["DashboardHeaderLabel"]!!
-
-    //    private val searchFieldPlaceHolderLabel by composeTestRule.stringResource(R.string.search_placeholder_label)
     private val searchFieldPlaceHolderLabel = labels["SearchPlaceHolderLabel"]!!
-
-    //    private val pokemonNewsLabel by composeTestRule.stringResource(R.string.pokemon_news_section_label)
     private val pokemonNewsLabel = labels["PokemonNewsLabel"]!!
-
-    //    private val viewAllLabel by composeTestRule.stringResource(R.string.view_all_news_button_label)
     private val viewAllLabel = labels["ViewAll"]!!
 
     // -- Actions --
@@ -57,4 +56,16 @@ class DashboardScreenRobot(
         assertWithText(pokemonNewsLabel)
         assertWithText(viewAllLabel)
     }
+
+    fun verifyRedirectedToPokedexScreen() = assertWithTag(POKEDEX_SCREEN_TEST_TAG)
+
+    fun verifyRedirectedToItemsScreen() = assertWithTag(ITEMS_SCREEN_TEST_TAG)
+
+    fun verifyRedirectedToMovesScreen() = assertWithTag(MOVES_SCREEN_TEST_TAG)
+
+    fun verifyRedirectedToTypesScreen() = assertWithTag(TYPES_SCREEN_TEST_TAG)
+
+    fun verifyRedirectedToFavoritesScreen() = assertWithTag(FAVORITES_SCREEN_TEST_TAG)
+
+    fun verifyRedirectedToPokemonNewsScreen() = assertWithTag(POKEMON_NEWS_SCREEN_TEST_TAG)
 }

@@ -24,8 +24,8 @@ val DefaultHorizontalPadding = 18.dp
 val CommonVerticalSpace = 20.dp
 
 @Composable
-fun DashboardScreen(
-//    viewModel: DashboardVM = hiltViewModel(),
+fun DashboardScreenConnector(
+    viewModel: DashboardVM = hiltViewModel(),
     onPokedexClick: VoidCallback,
     onItemsClick: VoidCallback,
     onMovesClick: VoidCallback,
@@ -33,7 +33,29 @@ fun DashboardScreen(
     onFavoritesClick: VoidCallback,
     onSeeAllNewsClick: VoidCallback,
 ) {
-//    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    DashboardScreen(
+        uiState = uiState,
+        onPokedexClick = onPokedexClick,
+        onItemsClick = onItemsClick,
+        onMovesClick = onMovesClick,
+        onTypesClick = onTypesClick,
+        onFavoritesClick = onFavoritesClick,
+        onSeeAllNewsClick = onSeeAllNewsClick,
+    )
+}
+
+@Composable
+fun DashboardScreen(
+    uiState: DashboardUiState,
+    onPokedexClick: VoidCallback,
+    onItemsClick: VoidCallback,
+    onMovesClick: VoidCallback,
+    onTypesClick: VoidCallback,
+    onFavoritesClick: VoidCallback,
+    onSeeAllNewsClick: VoidCallback,
+) {
     val scrollingState = rememberScrollState()
     val listState = rememberLazyListState()
     val flingBehavior = rememberSnapFlingBehavior(listState)
@@ -56,7 +78,7 @@ fun DashboardScreen(
         PokemonNews(
             listState = listState,
             flingBehavior = flingBehavior,
-            uiState = DashboardUiState.Loading,
+            uiState = uiState,
         )
 
         VerticalSpace(CommonVerticalSpace)
@@ -68,6 +90,7 @@ fun DashboardScreen(
 fun DashboardScreenPreview() {
     PokedexTheme {
         DashboardScreen(
+            uiState = DashboardUiState.Loading,
             onPokedexClick = {},
             onItemsClick = {},
             onMovesClick = {},

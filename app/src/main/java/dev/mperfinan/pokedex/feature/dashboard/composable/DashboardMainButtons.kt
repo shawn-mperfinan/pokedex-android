@@ -18,7 +18,6 @@ const val ITEMS_BUTTON_TEST_TAG = "ItemsMainButton"
 const val MOVES_BUTTON_TEST_TAG = "MovesMainButton"
 const val TYPES_BUTTON_TEST_TAG = "TypesMainButton"
 const val FAVORITES_BUTTON_TEST_TAG = "FavoritesMainButton"
-
 private val ZeroPadding = 0.dp
 private val CommonSpace = 8.dp
 

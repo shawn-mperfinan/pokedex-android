@@ -1,10 +1,12 @@
 package dev.mperfinan.pokedex.feature.dashboard
 
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.navigation.compose.ComposeNavigator
+import androidx.navigation.testing.TestNavHostController
 import dev.mperfinan.pokedex.R
-//import dev.mperfinan.pokedex.test.R
-import dev.mperfinan.pokedex.ui.theme.PokedexTheme
+import dev.mperfinan.pokedex.navigation.TestNavHost
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -13,6 +15,8 @@ class DashboardScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    private lateinit var navHostController: TestNavHostController
+
     private lateinit var dashboardRobot: DashboardScreenRobot
 
     private lateinit var labels: Map<String, String>
@@ -20,24 +24,20 @@ class DashboardScreenTest {
     @Before
     fun setupDashboardScreen() {
         composeTestRule.setContent {
+            navHostController =
+                TestNavHostController(LocalContext.current).apply {
+                    navigatorProvider.addNavigator(ComposeNavigator())
+                }
 
-            labels = mapOf(
-                "DashboardHeaderLabel" to stringResource(R.string.dashboard_header_label),
-                "SearchPlaceHolderLabel" to stringResource(R.string.search_placeholder_label),
-                "PokemonNewsLabel" to stringResource(R.string.pokemon_news_section_label),
-                "ViewAll" to stringResource(dev.mperfinan.pokedex.R.string.view_all_news_button_label)
-            )
+            TestNavHost(navHostController)
 
-            PokedexTheme {
-                DashboardScreen(
-                    onPokedexClick = {},
-                    onItemsClick = {},
-                    onMovesClick = {},
-                    onTypesClick = {},
-                    onFavoritesClick = {},
-                    onSeeAllNewsClick = {},
+            labels =
+                mapOf(
+                    "DashboardHeaderLabel" to stringResource(R.string.dashboard_header_label),
+                    "SearchPlaceHolderLabel" to stringResource(R.string.search_placeholder_label),
+                    "PokemonNewsLabel" to stringResource(R.string.pokemon_news_section_label),
+                    "ViewAll" to stringResource(dev.mperfinan.pokedex.R.string.view_all_news_button_label),
                 )
-            }
         }
 
         dashboardRobot = DashboardScreenRobot(composeTestRule, labels)
@@ -54,12 +54,13 @@ class DashboardScreenTest {
         }
     }
 
-    // --- Behavior Tests ---
+    // --- Redirection Behavior Tests ---
 
     @Test
     fun `verify pokedex dashboard button is clicked then redirected to designated page`() {
         with(dashboardRobot) {
             clickPokedexDashboardButton()
+            verifyRedirectedToPokedexScreen()
         }
     }
 
@@ -67,6 +68,7 @@ class DashboardScreenTest {
     fun `verify items dashboard button is clicked then redirected to designated page`() {
         with(dashboardRobot) {
             clickItemsDashboardButton()
+            verifyRedirectedToItemsScreen()
         }
     }
 
@@ -74,6 +76,7 @@ class DashboardScreenTest {
     fun `verify moves dashboard button is clicked then redirected to designated page`() {
         with(dashboardRobot) {
             clickMovesDashboardButton()
+            verifyRedirectedToMovesScreen()
         }
     }
 
@@ -81,6 +84,7 @@ class DashboardScreenTest {
     fun `verify types dashboard button is clicked then redirected to designated page`() {
         with(dashboardRobot) {
             clickTypesDashboardButton()
+            verifyRedirectedToTypesScreen()
         }
     }
 
@@ -88,6 +92,7 @@ class DashboardScreenTest {
     fun `verify favorites dashboard button is clicked then redirected to designated page`() {
         with(dashboardRobot) {
             clickFavoritesDashboardButton()
+            verifyRedirectedToFavoritesScreen()
         }
     }
 
@@ -95,6 +100,7 @@ class DashboardScreenTest {
     fun `verify view all dashboard button is clicked then redirected to designated page`() {
         with(dashboardRobot) {
             clickViewAllDashboardButton()
+            verifyRedirectedToPokemonNewsScreen()
         }
     }
 }

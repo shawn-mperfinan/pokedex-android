@@ -1,6 +1,5 @@
 package dev.mperfinan.pokedex.feature.onboarding
 
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.test.junit4.createComposeRule
 import dev.mperfinan.pokedex.R
