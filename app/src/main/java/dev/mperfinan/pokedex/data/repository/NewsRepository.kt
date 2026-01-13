@@ -1,11 +1,10 @@
 package dev.mperfinan.pokedex.data.repository
 
 import dev.mperfinan.pokedex.core.model.NewsArticle
-import dev.mperfinan.pokedex.data.network.model.news.NewsArticleDto
-import dev.mperfinan.pokedex.data.network.model.news.asUiModel
 import dev.mperfinan.pokedex.data.network.onError
 import dev.mperfinan.pokedex.data.network.onException
 import dev.mperfinan.pokedex.data.network.onSuccess
+import dev.mperfinan.pokedex.data.source.local.IPokedexLocalDataSource
 import dev.mperfinan.pokedex.data.source.remote.INewsNetworkDataSource
 import dev.mperfinan.pokedex.di.Dispatcher
 import dev.mperfinan.pokedex.di.ScopeDispatcher
@@ -26,6 +25,7 @@ import javax.inject.Inject
  */
 class NewsRepository @Inject constructor(
     private val newsNetworkDataSource: INewsNetworkDataSource,
+    private val pokedexLocalDataSource: IPokedexLocalDataSource,
     @param:Dispatcher(ScopeDispatcher.IO) private val ioDispatcher: CoroutineDispatcher,
 ) : INewsRepository {
     /**
@@ -38,8 +38,10 @@ class NewsRepository @Inject constructor(
         return flow {
             newsNetworkDataSource.getPokemonNews(pageIndex, count)
                 .onSuccess { response ->
-                    val pokemonNews = response.map(NewsArticleDto::asUiModel)
-                    emit(Result.Success(pokemonNews))
+                    pokedexLocalDataSource.apply {
+                        insertPokemonNews(response)
+                        emit(Result.Success(getPokemonNews()))
+                    }
                 }
                 .onError { code, message ->
                     emit(Result.Error(code, message))

@@ -6,6 +6,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.mperfinan.pokedex.data.source.datastore.IUserPreferencesDatastore
 import dev.mperfinan.pokedex.data.source.datastore.UserPreferencesDatastore
+import dev.mperfinan.pokedex.data.source.local.IPokedexLocalDataSource
+import dev.mperfinan.pokedex.data.source.local.PokedexLocalDataSource
 import dev.mperfinan.pokedex.data.source.remote.INewsNetworkDataSource
 import dev.mperfinan.pokedex.data.source.remote.NewsNetworkDataSource
 
@@ -17,4 +19,7 @@ interface DataSourceModule {
 
     @Binds
     fun bindNewsNetworkDataSource(newsNetworkDataSource: NewsNetworkDataSource): INewsNetworkDataSource
+
+    @Binds
+    fun bindPokedexLocalDataSource(pokedexLocalDataSource: PokedexLocalDataSource): IPokedexLocalDataSource
 }

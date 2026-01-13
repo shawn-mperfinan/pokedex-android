@@ -19,14 +19,15 @@ import coil3.compose.AsyncImage
 import dev.mperfinan.pokedex.core.model.NewsArticle
 import dev.mperfinan.pokedex.ui.core.composable.NewsCardLayout
 import dev.mperfinan.pokedex.ui.core.composable.VerticalSpace
+import dev.mperfinan.pokedex.utility.ValueChanged
 import dev.mperfinan.pokedex.utility.VoidCallback
 
 @Composable
 fun NewsCard(
     news: NewsArticle,
-    onCardClick: VoidCallback,
+    onCardClick: ValueChanged<Int>,
 ) {
-    NewsCardLayout(onClick = onCardClick) {
+    NewsCardLayout(onClick = { onCardClick(news.id) }) {
         AsyncImage(
             model = news.imageUrl,
             contentDescription = "News image content",

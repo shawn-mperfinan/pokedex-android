@@ -1,6 +1,6 @@
 package dev.mperfinan.pokedex.data.network.model.news
 
-import dev.mperfinan.pokedex.core.model.NewsArticle
+import dev.mperfinan.pokedex.data.database.entity.NewsEntity
 
 data class NewsArticleDto(
     val id: Int,
@@ -14,8 +14,8 @@ data class NewsArticleDto(
     val tags: List<NewsTags>,
 )
 
-fun NewsArticleDto.asUiModel(): NewsArticle {
-    return NewsArticle(
+fun NewsArticleDto.asEntity(): NewsEntity {
+    return NewsEntity(
         id = id,
         type = type,
         title = alt,

@@ -18,6 +18,7 @@ import dev.mperfinan.pokedex.feature.dashboard.composable.PokemonNewsHeader
 import dev.mperfinan.pokedex.ui.core.composable.VerticalSpace
 import dev.mperfinan.pokedex.ui.core.preview.PhonePreviews
 import dev.mperfinan.pokedex.ui.theme.PokedexTheme
+import dev.mperfinan.pokedex.utility.ValueChanged
 import dev.mperfinan.pokedex.utility.VoidCallback
 
 val DefaultHorizontalPadding = 18.dp
@@ -32,6 +33,7 @@ fun DashboardScreenConnector(
     onTypesClick: VoidCallback,
     onFavoritesClick: VoidCallback,
     onSeeAllNewsClick: VoidCallback,
+    onNewsCardClick: ValueChanged<Int>,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -43,6 +45,7 @@ fun DashboardScreenConnector(
         onTypesClick = onTypesClick,
         onFavoritesClick = onFavoritesClick,
         onSeeAllNewsClick = onSeeAllNewsClick,
+        onNewsCardClick = onNewsCardClick,
     )
 }
 
@@ -55,6 +58,7 @@ fun DashboardScreen(
     onTypesClick: VoidCallback,
     onFavoritesClick: VoidCallback,
     onSeeAllNewsClick: VoidCallback,
+    onNewsCardClick: ValueChanged<Int>,
 ) {
     val scrollingState = rememberScrollState()
     val listState = rememberLazyListState()
@@ -73,12 +77,17 @@ fun DashboardScreen(
             onFavoritesClick,
         )
 
+        VerticalSpace(CommonVerticalSpace)
+
         PokemonNewsHeader(onSeeAllNewsClick)
+
+        VerticalSpace(CommonVerticalSpace)
 
         PokemonNews(
             listState = listState,
             flingBehavior = flingBehavior,
             uiState = uiState,
+            onNewsCardClick = onNewsCardClick,
         )
 
         VerticalSpace(CommonVerticalSpace)
@@ -97,6 +106,7 @@ fun DashboardScreenPreview() {
             onTypesClick = {},
             onFavoritesClick = {},
             onSeeAllNewsClick = {},
+            onNewsCardClick = {},
         )
     }
 }
