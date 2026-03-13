@@ -28,7 +28,7 @@ fun PokemonNewsHeader(onSeeAllNewsClick: VoidCallback) {
         modifier =
             Modifier
                 .fillMaxWidth()
-                .padding(horizontal = DefaultHorizontalPadding, vertical = 26.dp),
+                .padding(horizontal = DefaultHorizontalPadding),
         horizontalArrangement = Arrangement.Absolute.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {

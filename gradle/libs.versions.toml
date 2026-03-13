@@ -22,6 +22,7 @@ firebaseCrashlytics = "3.0.6"
 hiltNavigationCompose = "1.3.0"
 navigationTesting = "2.9.6"
 datastorePreferences = "1.2.0"
+room = "2.8.4"
 
 # Testing
 androidJUnit5 = "1.14.0.0"
@@ -66,6 +67,11 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastorePreferences" }
 core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtxVersion" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room"}
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room"}
+androidx-room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room"}
+androidx-room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room"}
 
 # Google
 google-dagger-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltAndroid" }

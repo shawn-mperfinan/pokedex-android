@@ -15,6 +15,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.mperfinan.pokedex.feature.dashboard.DashboardUiState
 import dev.mperfinan.pokedex.feature.dashboard.DefaultHorizontalPadding
+import dev.mperfinan.pokedex.utility.ValueChanged
+import dev.mperfinan.pokedex.utility.VoidCallback
 
 private const val NEWS_SHIMMERING_COUNT = 5
 
@@ -23,6 +25,7 @@ fun PokemonNews(
     listState: LazyListState,
     flingBehavior: FlingBehavior,
     uiState: DashboardUiState,
+    onNewsCardClick: ValueChanged<Int>,
 ) {
     when (uiState) {
         is DashboardUiState.Loading -> {
@@ -58,9 +61,10 @@ fun PokemonNews(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 items(uiState.newsArticles) { newsItem ->
-                    NewsCard(news = newsItem) {
-                        // TODO: implement callback behavior
-                    }
+                    NewsCard(
+                        news = newsItem,
+                        onCardClick = onNewsCardClick,
+                    )
                 }
             }
         }

@@ -2,6 +2,7 @@ package dev.mperfinan.pokedex.utility
 
 import dev.mperfinan.pokedex.R
 import dev.mperfinan.pokedex.feature.about.navigation.AboutRoute
+import dev.mperfinan.pokedex.feature.article.navigation.ArticleRoute
 import dev.mperfinan.pokedex.feature.favorites.navigation.FavoritesRoute
 import dev.mperfinan.pokedex.feature.feedback.navigation.FeedbackRoute
 import dev.mperfinan.pokedex.feature.items.navigation.ItemsRoute
@@ -26,6 +27,7 @@ fun retrieveAppBarTitle(currentRoute: String?): Int {
         routeName<SettingsRoute>() -> R.string.title_settings
         routeName<AboutRoute>() -> R.string.title_about
         routeName<FeedbackRoute>() -> R.string.title_feedback
+        routeName<ArticleRoute>() -> R.string.title_article
         else -> R.string.app_name
     }
 }

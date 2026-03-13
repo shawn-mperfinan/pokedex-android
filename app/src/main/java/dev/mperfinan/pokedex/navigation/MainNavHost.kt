@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import dev.mperfinan.pokedex.feature.about.navigation.aboutScreen
+import dev.mperfinan.pokedex.feature.article.navigation.articleScreen
+import dev.mperfinan.pokedex.feature.article.navigation.navigateToArticleScreen
 import dev.mperfinan.pokedex.feature.dashboard.navigation.DashboardRoute
 import dev.mperfinan.pokedex.feature.dashboard.navigation.dashboardScreen
 import dev.mperfinan.pokedex.feature.favorites.navigation.favoritesScreen
@@ -34,6 +36,7 @@ fun MainNavHost(mainNavController: NavHostController) {
             onTypesClick = mainNavController::navigateToTypesScreen,
             onFavoritesClick = mainNavController::navigateToFavoritesScreen,
             onSeeAllNewsClick = mainNavController::navigateToPokemonNewsScreen,
+            onNewsCardClick = mainNavController::navigateToArticleScreen,
         )
 
         pokedexScreen()
@@ -53,5 +56,7 @@ fun MainNavHost(mainNavController: NavHostController) {
         aboutScreen()
 
         feedbackScreen()
+
+        articleScreen()
     }
 }

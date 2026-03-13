@@ -66,6 +66,15 @@ android {
         }
     }
 
+    ksp {
+        /**
+         * The schemas directory contains a schema file for each version of the Room database.
+         * This is required to enable Room auto migrations.
+         * See https://developer.android.com/reference/kotlin/androidx/room/AutoMigration.
+         */
+        arg("room.schemaLocation", "$projectDir/schemas")
+    }
+
     buildFeatures {
         compose = true
         buildConfig = true
@@ -158,6 +167,12 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     ksp(libs.google.dagger.hilt.android.compiler)
 
+    // Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.paging)
+    ksp(libs.androidx.room.compiler)
+
     // Preferences Datastore
     implementation(libs.androidx.datastore.preferences)
 
@@ -173,6 +188,9 @@ dependencies {
 
     // MockWebserver
     testImplementation(libs.squareup.okhttp3.mockwebserver)
+
+    // Room test helpers
+    testImplementation(libs.androidx.room.testing)
 
     // JUnit 4
     testImplementation(libs.junit4)
